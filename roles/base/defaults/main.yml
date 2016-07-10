@@ -1,0 +1,18 @@
+packages:
+  - binutils
+  - curl
+  - dstat
+  - ethtool
+  - git
+  - htop
+  - iptraf
+  - jnettop
+  - language-pack-en
+  - lvm2
+  - ntp
+  - sudo
+  - sysstat
+  - tmux
+  - tree
+  - vim
+  - vnstat

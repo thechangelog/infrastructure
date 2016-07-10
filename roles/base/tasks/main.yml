@@ -1,0 +1,74 @@
+- name: update package sources
+  command: apt-get update
+
+- name: upgrade packages
+  command: apt-get -y upgrade
+
+- name: install common system packages via apt
+  apt: pkg={{ item }} state=latest
+  with_items: "{{ packages }}"
+
+- name: enable lvm metadata daemon
+  ignore_errors: true
+  service:
+    name: lvm2-lvmetad
+    enabled: yes
+    state: started
+
+- name: cleanup packaged that are no longer required
+  command: apt-get -y autoremove
+
+- name: Prefer IPv4
+  lineinfile: dest=/etc/gai.conf line='precedence ::ffff:0:0/96  100'
+
+- name: start ntp on boot
+  service: name=ntp state=started enabled=yes
+
+- name: set locale to US English
+  copy: src=locale dest=/etc/default/locale
+
+- name: set localtime to UTC
+  file: src=/usr/share/zoneinfo/UTC dest=/etc/localtime state=link force=yes
+
+- name: set timezone to UTC
+  copy: src=timezone dest=/etc/timezone
+
+- name: sudo group
+  group: name=sudo system=yes
+
+- name: root SSH key
+  authorized_key: user=root key="{{ item }}"
+  with_file:
+  - gerhard_20160324_rsa.pub
+
+- name: sudoers don't need a password
+  lineinfile: "dest=/etc/sudoers regexp='^%sudo' line='%sudo ALL=(ALL) NOPASSWD:ALL'
+              validate='visudo -cf %s'"
+
+- name: sudoers have their ssh agent forwarded
+  copy: src=sudo_forward_ssh_agent dest=/etc/sudoers.d/sudo_forward_ssh_agent
+        mode=0440 owner=root group=root
+        validate='visudo -cf %s'
+
+- name: make vim the default editor
+  copy: src=default_editor.sh dest=/etc/profile.d/default_editor.sh
+        mode=0644 owner=root group=root
+
+- name: create .config dir
+  file: dest="/root/.config" state=directory
+        mode=755 owner=root group=root
+
+- name: create htoprc dir
+  file: dest="/root/.config/htop" state=directory
+        mode=755 owner=root group=root
+
+- name: customise htop
+  copy: src=htoprc dest="/root/.config/htop/htoprc"
+        mode=644 owner=root group=root
+
+- name: set hostname
+  hostname: name={{ inventory_hostname }}
+
+- name: resolve hostname explicitly
+  lineinfile: dest=/etc/hosts line='127.0.0.1 {{ inventory_hostname }}'
+              owner=root group=root mode=0644

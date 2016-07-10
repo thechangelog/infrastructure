@@ -1,0 +1,11 @@
+- name: &fqdn 2016.changelog.com
+  hosts: all
+  gather_facts: true
+
+  vars:
+    host: "{{ inventory_hostname }}"
+    hostname: "{{ ansible_ssh_host }}"
+
+  roles:
+    - role: base
+      tags: [base]
