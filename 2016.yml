@@ -1,11 +1,16 @@
 - name: &fqdn 2016.changelog.com
-  hosts: all
+  hosts: 2016
   gather_facts: true
 
   vars:
     host: "{{ inventory_hostname }}"
     hostname: "{{ ansible_ssh_host }}"
+    lvm_pvdev: /dev/sdc
+    lvm_vg: docker
 
   roles:
     - role: base
       tags: [base]
+
+    - role: lvm
+      tags: [lvm]

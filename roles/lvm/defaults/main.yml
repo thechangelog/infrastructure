@@ -1,0 +1,3 @@
+# lvm_pvdev: e.g. /dev/sdc (required variable)
+# lvm_vg: e.g. docker (required variable)
+# lvm_vgsize: e.g. 10240 (in MB, required variable)
