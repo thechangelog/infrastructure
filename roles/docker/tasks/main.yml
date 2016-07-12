@@ -1,0 +1,65 @@
+- name: fail if not a new release of Ubuntu
+  fail: msg="{{ ansible_distribution_version }} is not an acceptable version of Ubuntu for this role"
+  when: ansible_distribution_version not in ["14.04", "16.04"]
+
+- include: lvm.yml
+  when: docker_dev is defined
+
+- name: upload GPG key
+  copy: src=docker.gpg dest=/tmp/docker.gpg
+
+- name: add GPG key to apt
+  apt_key: file=/tmp/docker.gpg state=present
+
+- name: cleanup GPG key
+  file: dest=/tmp/docker.gpg state=absent
+
+- name: add new apt repository
+  apt_repository: repo="{{ docker_apt_repository }}" update_cache=yes
+
+- name: install pip
+  package:
+    name: python-pip
+    state: present
+
+- name: update pip to latest
+  command: pip install --upgrade pip
+
+- name: install Python bindings
+  pip:
+    executable: /usr/local/bin/pip
+    name: docker-py
+    version: "{{ docker_py_version }}"
+    state: present
+
+- name: pin docker-engine version
+  copy:
+    dest: /etc/apt/preferences.d/pin-docker-engine
+    content: |
+      Package: docker-engine
+      Pin: version {{ docker_version }}*
+      Pin-Priority: 1000
+
+- name: install package
+  apt: name="docker-engine={{ docker_version }}*"
+
+- name: ensure docker group exists
+  group:
+    name: docker
+    state: present
+
+- name: config
+  template: src=daemon.json.j2 dest=/etc/docker/daemon.json
+  register: docker_config
+
+- name: restart docker
+  ignore_errors: true
+  service: name=docker state=restarted
+  when: docker_config | changed
+
+- name: start docker on boot
+  service: name=docker state=started enabled=yes
+
+- name: setup shell helpers
+  copy: src=docker.sh dest=/etc/profile.d/docker.sh
+        mode=0644 owner=root group=root

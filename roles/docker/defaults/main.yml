@@ -1,0 +1,8 @@
+docker_version: 1.11.2
+docker_py_version: 1.8.1
+
+docker_apt_repository: "deb https://apt.dockerproject.org/repo ubuntu-{{ ansible_distribution_release }} main"
+
+# docker_dev: set to the disk that should be used for Docker
+# docker_data_size: used by Docker daemon for images (required if docker_dev set)
+# docker_volumes_size: used for Docker volumes (required if docker_dev set)

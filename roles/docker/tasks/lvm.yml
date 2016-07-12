@@ -1,0 +1,101 @@
+- name: ensure physical volume exists
+  shell: >
+    pvdisplay {{ docker_dev }} ||
+    pvcreate {{ docker_dev }}
+
+- name: ensure volume group exists
+  register: docker_vg
+  shell: >
+    vgdisplay docker ||
+    vgcreate docker {{ docker_dev }}
+  args:
+    creates: /dev/docker
+
+- name: ensure metadata lvm exists
+  shell: >
+    lvdisplay /dev/docker/thinpoolmeta ||
+    lvcreate --wipesignatures y -n thinpoolmeta docker -l 1%VG
+  args:
+    creates: /dev/docker/thinpoolmeta
+
+- name: ensure data lvm exists
+  shell: >
+    lvdisplay /dev/docker/thinpool ||
+    (
+      lvcreate --wipesignatures y -n thinpool docker -L {{ docker_data_size }};
+      lvconvert -y --zero n -c 512K --thinpool docker/thinpool --poolmetadata docker/thinpoolmeta
+    )
+  args:
+    creates: /dev/docker/thinpool
+
+- name: ensure volumes lvm exists
+  shell: >
+    lvdisplay /dev/docker/volumes ||
+    lvcreate -n volumes docker -L {{ docker_volumes_size }}
+  args:
+    creates: /dev/docker/volumes
+
+- name: create volumes filesystem
+  filesystem:
+    fstype: ext4
+    dev: /dev/docker/volumes
+    opts: "-m 0"
+
+- name: mount volumes lvm
+  mount:
+    name: /data
+    src: /dev/docker/volumes
+    fstype: ext4
+    opts: "defaults,relatime"
+    dump: 0
+    passno: 0
+    state: mounted
+
+- name: create lvm profile dir
+  file:
+    path: /etc/lvm/profile
+    state: directory
+
+- name: create lvm autoextension profile
+  copy:
+    src: docker-thinpool.profile
+    dest: /etc/lvm/profile/docker-thinpool.profile
+
+- name: apply lvm profile to data lvm
+  shell: >
+    lvchange --metadataprofile docker-thinpool docker/thinpool
+
+- name: list monitored logical volumes
+  register: lvs
+  shell: >
+    lvs -o+seg_monitor /dev/docker/thinpool
+
+- name: debug lvs
+  when: debug | default(false)
+  debug:
+    var: lvs
+
+- name: ensure data lvm is monitored
+  assert:
+    that:
+      - "'monitored' in lvs.stdout"
+
+- name: ensure docker is stopped
+  when: docker_vg.changed
+  ignore_errors: true
+  service:
+    name: docker
+    state: stopped
+
+- name: remove lib
+  when: docker_vg.changed
+  ignore_errors: true
+  shell: >
+    rm -fr /var/lib/docker
+
+- name: ensure docker is running
+  when: docker_vg.changed
+  ignore_errors: true
+  service:
+    name: docker
+    state: started

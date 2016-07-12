@@ -1,1 +1,2 @@
-lvm_vgsize: "{{ 370 * 1024 }}"
+docker_data_size: 20G
+docker_volumes_size: 300G

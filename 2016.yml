@@ -5,12 +5,11 @@
   vars:
     host: "{{ inventory_hostname }}"
     hostname: "{{ ansible_ssh_host }}"
-    lvm_pvdev: /dev/sdc
-    lvm_vg: docker
+    docker_dev: /dev/sdc
 
   roles:
     - role: base
       tags: [base]
 
-    - role: lvm
-      tags: [lvm]
+    - role: docker
+      tags: [docker]
