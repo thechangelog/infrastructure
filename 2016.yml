@@ -6,6 +6,8 @@
     host: "{{ inventory_hostname }}"
     hostname: "{{ ansible_ssh_host }}"
     docker_dev: /dev/sdc
+    web_volume_path: /data/www
+    papertrail_log_destination: tcp+tls://logs4.papertrailapp.com:35714
 
   roles:
     - role: base
@@ -13,3 +15,6 @@
 
     - role: docker
       tags: [docker]
+
+    - role: nginx
+      tags: [nginx]

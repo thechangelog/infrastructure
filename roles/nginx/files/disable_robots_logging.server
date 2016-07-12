@@ -1,0 +1,5 @@
+location = /robots.txt {
+  access_log off;
+  log_not_found off;
+  try_files $uri =204;
+}

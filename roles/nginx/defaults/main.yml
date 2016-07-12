@@ -1,0 +1,6 @@
+nginx_version: 1.11.1
+
+nginx_config_dir: /data/nginx
+nginx_sites_dir: "{{ nginx_config_dir }}/sites"
+
+nginx_net: web

@@ -1,0 +1,4 @@
+location ~ .(?:css|gif|ico|jpe?g|js|png)$ {
+  add_header Cache-Control 'public';
+  expires max;
+}

@@ -1,0 +1,5 @@
+# If HTTPS, then set a variable so it can be passed along
+map $scheme $server_https {
+  default off;
+  https on;
+}

@@ -1,0 +1,9 @@
+- name: reload nginx
+  shell: >
+    docker exec nginx.{{ nginx_net }} nginx -t &&
+    docker kill -s HUP nginx.{{ nginx_net }}
+
+- name: restart nginx
+  shell: >
+    docker exec nginx.{{ nginx_net }} nginx -t &&
+    docker restart nginx.{{ nginx_net }}
