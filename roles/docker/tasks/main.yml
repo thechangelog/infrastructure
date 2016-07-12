@@ -63,3 +63,6 @@
 - name: setup shell helpers
   copy: src=docker.sh dest=/etc/profile.d/docker.sh
         mode=0644 owner=root group=root
+
+- include: devicemapper.yml
+  when: docker_dev is defined
