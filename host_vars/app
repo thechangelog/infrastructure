@@ -1,2 +1,4 @@
 docker_data_size: 20G
 docker_volumes_size: 300G
+fqdn: 2016.changelog.com
+index_image: https://d13yacurqjgara.cloudfront.net/users/284576/screenshots/968840/nate_dribbble_flamebird_teaser.png

@@ -1,2 +1,4 @@
 docker_data_size: 10G
 docker_volumes_size: 20G
+fqdn: ci.changelog.com
+index_image: https://cdn-images-1.medium.com/fit/c/95/95/1*RWt4xnbF8lY4-XNEJBRDLw.png

@@ -18,3 +18,12 @@
 
     - role: nginx
       tags: [nginx]
+
+    - role: changelog
+      tags: [changelog]
+
+    - role: check
+      tags: [check]
+      https: true
+      force_https: true
+      https_common_name: "*.changelog.com"
