@@ -40,6 +40,7 @@
   authorized_key: user=root key="{{ item }}"
   with_file:
   - gerhard_20160324_rsa.pub
+  - jerod_20160715_rsa.pub
 
 - name: sudoers don't need a password
   lineinfile: "dest=/etc/sudoers regexp='^%sudo' line='%sudo ALL=(ALL) NOPASSWD:ALL'
