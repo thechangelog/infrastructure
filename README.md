@@ -36,6 +36,12 @@ app ansible_ssh_host=198.74.61.95
 ```
 1. `ansible-playbook 2016.yml -l [HOST-ALIAS]`
 
+## Helps
+
+### How do I access secret keys & credentials?
+
+Sign up for a lastpass.com account, then ask either Jerod, Adam or Gerhard to add you to the Changelog Lastpass share.
+
 ## Links
 
 [2016 Changelog](https://2016.changelog.com)
