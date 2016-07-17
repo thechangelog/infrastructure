@@ -1,3 +1,4 @@
+# authorized_keys: required, ensure it is defined securely
 packages:
   - binutils
   - curl

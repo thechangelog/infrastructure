@@ -8,6 +8,10 @@
     docker_dev: /dev/sdc
     web_volume_path: /data/www
     papertrail_log_destination: tcp+tls://logs4.papertrailapp.com:35714
+    changelog_https_cert: "{{ lookup('env', 'HTTPS_CERT') }}"
+    changelog_https_key: "{{ lookup('env', 'HTTPS_KEY') }}"
+    changelog_https_chain: "{{ lookup('env', 'HTTPS_CHAIN') }}"
+    authorized_keys: "{{ lookup('env', 'AUTHORIZED_KEYS') }}"
 
   roles:
     - role: base

@@ -1,7 +1,7 @@
 - name: configure HTTPS certificate
   notify: nginx restart
   copy:
-    content: "{{ lookup('env', 'HTTPS_CERT') }}"
+    content: "{{ changelog_https_cert }}"
     dest: /etc/ssl/star.changelog.com.crt
     owner: root
     group: root
@@ -10,7 +10,7 @@
 - name: configure HTTPS key
   notify: nginx restart
   copy:
-    content: "{{ lookup('env', 'HTTPS_KEY') }}"
+    content: "{{ changelog_https_key }}"
     dest: /etc/ssl/star.changelog.com.key
     owner: root
     group: root
@@ -19,7 +19,7 @@
 - name: configure HTTPS chain
   notify: nginx restart
   copy:
-    content: "{{ lookup('env', 'HTTPS_CHAIN') }}"
+    content: "{{ changelog_https_chain }}"
     dest: /etc/ssl/star.changelog.com.fullchain.pem
     owner: root
     group: root

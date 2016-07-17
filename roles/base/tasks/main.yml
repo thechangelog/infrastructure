@@ -38,7 +38,7 @@
 
 - name: root SSH key
   copy:
-    content: "{{ lookup('env', 'AUTHORIZED_KEYS') }}"
+    content: "{{ authorized_keys }}"
     dest: /root/.ssh/authorized_keys
     owner: root
     group: root
