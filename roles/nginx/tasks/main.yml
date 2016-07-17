@@ -7,7 +7,7 @@
   file:
     dest: "{{ item }}"
     state: directory
-    recurse: true
+    recurse: yes
   with_items:
     - "{{ nginx_sites_dir }}"
     - "{{ nginx_config_dir }}/conf.d"

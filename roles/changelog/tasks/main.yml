@@ -29,7 +29,7 @@
   file:
     dest: "{{ web_volume_path }}/{{ fqdn }}"
     state: directory
-    recurse: true
+    recurse: yes
 
 - name: create index.html
   template:
