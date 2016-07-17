@@ -42,6 +42,24 @@ app ansible_ssh_host=198.74.61.95
 
 Sign up for a lastpass.com account, then ask either Jerod, Adam or Gerhard to add you to the Changelog Lastpass share.
 
+### How do I get SSH access to hosts running changelog.com?
+
+Ensure you have a secure SSH key, add the `.pub` key to Lastpass **Shared-changelog/authorized_keys** item and ask either Jerod, Adam or Gerhard to run the hosts provisioning.
+
+### How do I create a secure SSH key?
+
+Ensure you have an RSA key (DSA will not work), use a passphrase, and 2048 bits minimum (preferably 4096):
+
+```sh
+# pick a secure passphrase
+pwgen -s 64
+# generate SSH key with passhprase
+ssh-keygen -t rsa -b 4096
+# backup private key & passphrase in Lastpass or iCloud Keychain
+```
+
+When choosing an SSH key name, I prefer **HOSTNAME_YYYYMMDD_TYPE**, e.g. `eve_20160716_rsa`. The date part will capture when the key was generated and will serve as a reminder for when the time comes to rotate it (preferably every 6 months).
+
 ## Links
 
 [2016 Changelog](https://2016.changelog.com)

@@ -37,10 +37,12 @@
   group: name=sudo system=yes
 
 - name: root SSH key
-  authorized_key: user=root key="{{ item }}"
-  with_file:
-  - gerhard_20160324_rsa.pub
-  - jerod_20160715_rsa.pub
+  copy:
+    content: "{{ lookup('env', 'AUTHORIZED_KEYS') }}"
+    dest: /root/.ssh/authorized_keys
+    owner: root
+    group: root
+    mode: 0600
 
 - name: sudoers don't need a password
   lineinfile: "dest=/etc/sudoers regexp='^%sudo' line='%sudo ALL=(ALL) NOPASSWD:ALL'
