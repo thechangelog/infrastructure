@@ -1,0 +1,8 @@
+postgres_version: 9.5.3
+
+postgres_admin_user: postgres
+# postgres_admin_pass: required, ensure it is defined securely
+postgres_net: web
+postgres_port: 5432
+
+postgres_volume_path: "/data/postgres.{{ postgres_net }}"

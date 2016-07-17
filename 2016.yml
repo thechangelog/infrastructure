@@ -12,6 +12,7 @@
     changelog_https_key: "{{ lookup('env', 'HTTPS_KEY') }}"
     changelog_https_chain: "{{ lookup('env', 'HTTPS_CHAIN') }}"
     authorized_keys: "{{ lookup('env', 'AUTHORIZED_KEYS') }}"
+    postgres_admin_pass: "{{ lookup('env', 'PG_ADMIN_PASS') }}"
 
   roles:
     - role: base
@@ -31,3 +32,6 @@
       https: true
       force_https: true
       https_common_name: "*.changelog.com"
+
+    - role: postgres
+      tags: [postgres]
