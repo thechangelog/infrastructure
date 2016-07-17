@@ -20,16 +20,7 @@ Host app
 Host ci
   Hostname 45.56.99.251
 ```
-1. SSH for the first time so that the host will be added to the **~/.ssh/known_hosts** file
-1. Add SSH public key to **/root/.ssh/authorized_keys**
-```sh
-mkdir ~/.ssh
-chmod 700 !$
-cat > ~/.ssh/authorized_keys
-# YOUR PUBLIC KEY(S)
-^C
-chmod 600 !$
-```
+1. `ssh-copy-id -f [YOUR PUBLIC KEY] ci`
 1. Add host alias and IP to **hosts**
 ```
 app ansible_ssh_host=198.74.61.95

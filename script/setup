@@ -2,7 +2,7 @@
 
 [ -z "$DEBUG" ] || set -x
 
-brew install direnv lastpass-cli
+brew install direnv lastpass-cli pwgen ssh-copy-id
 direnv allow
 
 sudo easy_install pip
