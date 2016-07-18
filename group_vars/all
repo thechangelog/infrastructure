@@ -1,0 +1,14 @@
+#/* vim: set ft=yaml : */
+
+papertrail_log_destination: tcp+tls://logs4.papertrailapp.com:35714
+
+authorized_keys: "{{ lookup('env', 'AUTHORIZED_KEYS') }}"
+
+postgres_admin_pass: "{{ lookup('env', 'PG_ADMIN_PASS') }}"
+
+nginx_config_dir: /data/nginx
+web_volume_path: /data/www
+
+changelog_https_cert: "{{ lookup('env', 'HTTPS_CERT') }}"
+changelog_https_key: "{{ lookup('env', 'HTTPS_KEY') }}"
+changelog_https_chain: "{{ lookup('env', 'HTTPS_CHAIN') }}"
