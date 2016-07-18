@@ -40,7 +40,6 @@
     docker network create {{ nginx_net }}
 
 - name: get network gateway
-  tags: [focus]
   register: docker_network_gateway
   shell: >
     docker network inspect {{ nginx_net }} | jq -r ".[0].IPAM.Config[0].Gateway" | awk -F '/' '{ print $1 }'
@@ -51,7 +50,6 @@
     var: docker_network_gateway
 
 - name: create default vhost
-  tags: [focus]
   notify: reload nginx
   template:
     src: default.site.j2
