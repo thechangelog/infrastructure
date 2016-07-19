@@ -17,9 +17,6 @@
     - role: nginx
       tags: [nginx]
 
-    - role: changelog
-      tags: [changelog]
-
     - role: check
       tags: [check]
       https: true
@@ -28,3 +25,14 @@
 
     - role: postgres
       tags: [postgres]
+
+- name: dotcom
+  hosts: app
+  gather_facts: false
+
+  vars:
+    changelog_app_repository: git@github.com:thechangelog/dotcom.git
+
+  roles:
+  - role: changelog
+    tags: [changelog]

@@ -1,3 +1,40 @@
+- name: checkout app
+  notify: restart app
+  git:
+    accept_hostkey: yes
+    dest: "{{ web_volume_path }}/dotcom"
+    force: yes
+    update: yes
+    repo: "{{ changelog_app_repository }}"
+
+- name: compile static assets
+  shell: >
+    docker run --rm --tty
+    --name dotcom.assets.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
+    --volume {{ web_volume_path }}/dotcom:/app:rw
+    --workdir /app
+    --log-driver syslog --log-opt tag=dotcom.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }} --log-opt syslog-address={{ papertrail_log_destination }}
+    --env MIX_ENV=prod
+    node:6.3.0
+    script/compile_static_assets
+
+- name: ensure app is running
+  shell: >
+    docker run --detach --tty
+    --restart unless-stopped
+    --label fqdn={{ fqdn }}
+    --name dotcom.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
+    --net {{ nginx_net }}
+    --net-alias dotcom
+    --volume {{ web_volume_path }}/dotcom:/app:rw
+    --workdir /app
+    --log-driver syslog --log-opt tag=dotcom.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }} --log-opt syslog-address={{ papertrail_log_destination }}
+    --env MIX_ENV=prod
+    --env PORT=4000
+    --env DB_URL=ecto://{{ postgres_admin_user }}:{{ postgres_admin_pass }}@postgres.{{ postgres_net }}/changelog
+    gerhard/elixir:1.3.2-erl18.3.4.1
+    ./script/prod
+
 - name: configure HTTPS certificate
   notify: nginx restart
   copy:
@@ -25,19 +62,8 @@
     group: root
     mode: 0644
 
-- name: create web volume
-  file:
-    dest: "{{ web_volume_path }}/{{ fqdn }}"
-    state: directory
-    recurse: yes
-
-- name: create index.html
-  template:
-    src: index.html.j2
-    dest: "{{ web_volume_path }}/{{ fqdn }}/index.html"
-
 - name: create nginx site
   notify: reload nginx
   template:
-    src: changelog.com.j2
+    src: 2016.changelog.com.j2
     dest: "{{ nginx_config_dir }}/sites/{{ fqdn }}.site"

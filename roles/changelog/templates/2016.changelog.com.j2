@@ -19,11 +19,15 @@ server {
   ssl_certificate_key /etc/ssl/star.changelog.com.key;
   ssl_trusted_certificate /etc/ssl/star.changelog.com.fullchain.pem;
 
-  root /var/www/{{ fqdn }};
+  root /var/www/{{ fqdn }}/web/static/assets;
 
   location / {
     index index.html;
-    try_files $uri $uri/ =404;
+    try_files $uri $uri/ @dotcom;
+  }
+
+  location @dotcom {
+    proxy_pass http://dotcom:4000;
   }
 
   include /etc/nginx/conf.d/*.server;

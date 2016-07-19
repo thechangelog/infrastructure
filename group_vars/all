@@ -4,8 +4,11 @@ papertrail_log_destination: tcp+tls://logs4.papertrailapp.com:35714
 
 authorized_keys: "{{ lookup('env', 'AUTHORIZED_KEYS') }}"
 
+postgres_net: web
+postgres_admin_user: postgres
 postgres_admin_pass: "{{ lookup('env', 'PG_ADMIN_PASS') }}"
 
+nginx_net: web
 nginx_config_dir: /data/nginx
 web_volume_path: /data/www
 
