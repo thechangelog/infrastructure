@@ -19,11 +19,10 @@ server {
   ssl_certificate_key /etc/ssl/star.changelog.com.key;
   ssl_trusted_certificate /etc/ssl/star.changelog.com.fullchain.pem;
 
-  root /var/www/{{ fqdn }}/web/static/assets;
+  root /var/www/dotcom/priv/static;
 
   location / {
-    index index.html;
-    try_files $uri $uri/ @dotcom;
+    try_files $uri @dotcom;
   }
 
   location @dotcom {
