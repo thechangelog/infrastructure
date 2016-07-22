@@ -7,17 +7,6 @@
     update: yes
     repo: "{{ changelog_app_repository }}"
 
-- name: compile static assets
-  shell: >
-    docker run --rm --tty
-    --name dotcom.assets.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
-    --volume {{ web_volume_path }}/dotcom:/app:rw
-    --workdir /app
-    --log-driver syslog --log-opt tag=dotcom.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }} --log-opt syslog-address={{ papertrail_log_destination }}
-    --env MIX_ENV=prod
-    node:6.3.0
-    script/compile_static_assets
-
 - name: ensure app is running
   shell: >
     docker run --detach --tty
@@ -34,6 +23,17 @@
     --env DB_URL=ecto://{{ postgres_admin_user }}:{{ postgres_admin_pass }}@postgres.{{ postgres_net }}/changelog
     gerhard/elixir:1.3.2-erl18.3.4.1
     ./script/prod
+
+- name: compile static assets
+  shell: >
+    docker run --rm --tty
+    --name dotcom.assets.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
+    --volume {{ web_volume_path }}/dotcom:/app:rw
+    --workdir /app
+    --log-driver syslog --log-opt tag=dotcom.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }} --log-opt syslog-address={{ papertrail_log_destination }}
+    --env MIX_ENV=prod
+    node:6.3.0
+    script/compile_static_assets
 
 - name: configure HTTPS certificate
   notify: nginx restart
