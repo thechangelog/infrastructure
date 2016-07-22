@@ -4,7 +4,8 @@ Run `script/setup` script for the initial setup. After the initial run, you only
 
 ## New host - first time configuration
 
-1. Add host details to **~/.ssh/config**
+1) Add host details to **~/.ssh/config**
+
 ```cfg
 # Prevent SSH connections timing out (poll the server every 60")
 ServerAliveInterval 60
@@ -20,12 +21,16 @@ Host app
 Host ci
   Hostname 45.56.99.251
 ```
-1. `ssh-copy-id -f [YOUR PUBLIC KEY] ci`
-1. Add host alias and IP to **hosts**
+
+2) `ssh-copy-id -f [YOUR PUBLIC KEY] ci`
+
+3) Add host alias and IP to **hosts**
+
 ```
 app ansible_ssh_host=198.74.61.95
 ```
-1. `ansible-playbook 2016.yml -l [HOST-ALIAS]`
+
+4) `ansible-playbook 2016.yml -l [HOST-ALIAS]`
 
 ## Helps
 
