@@ -54,7 +54,7 @@ ssh-keygen -t rsa -b 4096
 # backup private key & passphrase in Lastpass or iCloud Keychain
 ```
 
-When choosing an SSH key name, I prefer **HOSTNAME_YYYYMMDD_TYPE**, e.g. `eve_20160716_rsa`. The date part will capture when the key was generated and will serve as a reminder for when the time comes to rotate it (preferably every 6 months).
+When choosing an SSH key name, I prefer **HOSTNAME_YYYYMMDD**, e.g. `eve_20160716`. The date part will capture when the key was generated and will serve as a reminder for when the time comes to rotate it (preferably every 6 months).
 
 ## Links
 
