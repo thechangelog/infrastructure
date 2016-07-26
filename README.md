@@ -49,6 +49,7 @@ Ensure you have an RSA key, use a passphrase, and 2048 bits minimum (preferably 
 ```sh
 # pick a secure passphrase
 pwgen -s 64
+# or, YubiKey static passwords
 # generate SSH key with passhprase
 ssh-keygen -t rsa -b 4096
 # backup private key & passphrase in Lastpass or iCloud Keychain
