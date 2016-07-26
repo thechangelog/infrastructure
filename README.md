@@ -44,7 +44,7 @@ Ensure you have a secure SSH key, add the `.pub` key to Lastpass **Shared-change
 
 ### How do I create a secure SSH key?
 
-Ensure you have an RSA key (DSA will not work), use a passphrase, and 2048 bits minimum (preferably 4096):
+Ensure you have an RSA key, use a passphrase, and 2048 bits minimum (preferably 4096):
 
 ```sh
 # pick a secure passphrase
