@@ -1,3 +1,5 @@
+#/* vim: set ft=cfg : */
+
 server {
   listen 80;
   server_name {{ fqdn }};
@@ -27,6 +29,7 @@ server {
 
   location @dotcom {
     proxy_pass http://dotcom:4000;
+    proxy_pass_header server;
   }
 
   include /etc/nginx/conf.d/*.server;

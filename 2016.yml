@@ -17,12 +17,6 @@
     - role: nginx
       tags: [nginx]
 
-    - role: check
-      tags: [check]
-      https: true
-      force_https: true
-      https_common_name: "*.changelog.com"
-
     - role: postgres
       tags: [postgres]
 
@@ -36,3 +30,11 @@
   roles:
   - role: changelog
     tags: [changelog]
+
+  - role: check
+    tags: [check]
+    https: true
+    force_https: true
+    https_common_name: "*.changelog.com"
+    response_server: Cowboy
+
