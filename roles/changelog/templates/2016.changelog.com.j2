@@ -25,13 +25,17 @@ server {
 
   client_max_body_size {{ changelog_max_upload_size_mb }}M;
 
-  location / {
-    try_files $uri @dotcom;
+  location /wp-content {
+    root /var/www/wp-content;
   }
 
   location @dotcom {
     proxy_pass http://dotcom:4000;
     proxy_pass_header server;
+  }
+
+  location / {
+    try_files $uri @dotcom;
   }
 
   include /etc/nginx/conf.d/*.server;

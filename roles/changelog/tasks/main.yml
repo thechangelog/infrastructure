@@ -38,6 +38,11 @@
     node:6.3.0
     ./script/compile_static_assets
 
+- name: create wp-content dir
+  file:
+    dest: "{{ web_volume_path }}/wp-content"
+    state: directory
+
 - name: configure HTTPS certificate
   notify: nginx restart
   copy:
