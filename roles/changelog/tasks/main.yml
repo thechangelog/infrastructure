@@ -38,9 +38,9 @@
     node:6.3.0
     ./script/compile_static_assets
 
-- name: create wp-content dir
+- name: create legacy content dir
   file:
-    dest: "{{ web_volume_path }}/wp-content"
+    dest: "{{ web_volume_path }}/legacy"
     state: directory
 
 - name: configure HTTPS certificate
@@ -70,7 +70,7 @@
     group: root
     mode: 0644
 
-- name: create nginx site
+- name: configure nginx site
   template:
     src: 2016.changelog.com.j2
     dest: "{{ nginx_config_dir }}/sites/{{ fqdn }}.site"
