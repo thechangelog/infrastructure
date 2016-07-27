@@ -23,6 +23,8 @@ server {
 
   root /var/www/dotcom/priv/static;
 
+  client_max_body_size {{ changelog_max_upload_size_mb }}M;
+
   location / {
     try_files $uri @dotcom;
   }
