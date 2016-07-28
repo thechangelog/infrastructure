@@ -32,9 +32,15 @@
     tags: [changelog]
 
   - role: check
-    tags: [check]
+    tags: [check, https]
     https: true
     force_https: true
     https_common_name: "*.changelog.com"
     response_server: Cowboy
 
+  - role: check
+    tags: [check, https]
+    https: true
+    https_common_name: "*.changelog.com"
+    path: "/wp-content/uploads/blinksale-image.jpg"
+    response_server: nginx

@@ -2,6 +2,7 @@ https: false
 force_https: false
 https_common_name: "{{ fqdn }}"
 untrusted_ca: false
+path: "/"
 
 response_status: HTTP/1.1 200 OK
 response_server: nginx
