@@ -1,3 +1,19 @@
+# ==> combine
+# Compiling 6 files (.ex)
+
+# == Compilation error on file lib/combine/parsers/text.ex ==
+# ** (CompileError) Elixir.Combine.Parsers.Text: function float_impl/1+43:
+#   Internal consistency check failed - please report this bug.
+#   Instruction: {call,4,{f,129}}
+#   Error:       {multiple_match_contexts,[{x,0},1]}:
+
+#     (stdlib) lists.erl:1338: :lists.foreach/2
+#     (stdlib) erl_eval.erl:670: :erl_eval.do_apply/6
+
+# could not compile dependency :combine, "mix compile" failed. You can recompile this dependency with "mix deps.compile combine", update it with "mix deps.update combine" or clean it with "mix deps.clean combine"
+
+# https://github.com/bitwalker/combine/issues/17
+# FROM erlang:19
 FROM erlang:18.3.4.1
 
 # elixir expects utf8.
