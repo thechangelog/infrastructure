@@ -1,5 +1,5 @@
-docker_version: 1.11.2
-docker_py_version: 1.8.1
+docker_version: 1.12
+docker_py_version: 1.9.0
 
 docker_apt_repository: "deb https://apt.dockerproject.org/repo ubuntu-{{ ansible_distribution_release }} main"
 
