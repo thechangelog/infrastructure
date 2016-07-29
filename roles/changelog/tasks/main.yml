@@ -11,7 +11,57 @@
   shell: >
     docker pull {{ changelog_app_image }}
 
-- name: ensure latest app version is running
+- name: install dependencies
+  when: app_version | changed
+  shell: >
+    docker run --rm --tty
+    --name dotcom.deps.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
+    --volume {{ web_volume_path }}/dotcom:/app:rw
+    --workdir /app
+    --log-driver syslog --log-opt tag=dotcom.deps.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }} --log-opt syslog-address={{ papertrail_log_destination }}
+    --env MIX_ENV=prod
+    {{ changelog_app_image }}
+    ./script/deps_install --only prod
+
+- name: compile assets
+  when: app_version | changed
+  shell: >
+    docker run --rm --tty
+    --name dotcom.assets.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
+    --volume {{ web_volume_path }}/dotcom:/app:rw
+    --workdir /app
+    --log-driver syslog --log-opt tag=dotcom.assets.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }} --log-opt syslog-address={{ papertrail_log_destination }}
+    --env MIX_ENV=prod
+    {{ changelog_assets_image }}
+    ./script/assets_compile
+
+- name: digest assets
+  when: app_version | changed
+  shell: >
+    docker run --rm --tty
+    --name dotcom.assets.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
+    --volume {{ web_volume_path }}/dotcom:/app:rw
+    --workdir /app
+    --log-driver syslog --log-opt tag=dotcom.assets.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }} --log-opt syslog-address={{ papertrail_log_destination }}
+    --env MIX_ENV=prod
+    {{ changelog_app_image }}
+    ./script/assets_digest
+
+- name: migrate db
+  when: app_version | changed
+  shell: >
+    docker run --rm --tty
+    --name dotcom.db.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
+    --volume {{ web_volume_path }}/dotcom:/app:rw
+    --net {{ nginx_net }}
+    --workdir /app
+    --log-driver syslog --log-opt tag=dotcom.db.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }} --log-opt syslog-address={{ papertrail_log_destination }}
+    --env MIX_ENV=prod
+    --env DB_URL=ecto://{{ postgres_admin_user }}:{{ postgres_admin_pass }}@postgres.{{ postgres_net }}/changelog
+    {{ changelog_app_image }}
+    ./script/db_migrate
+
+- name: deploy latest app version
   shell: >
     docker run --detach --tty
     --restart unless-stopped
@@ -27,19 +77,7 @@
     --env DB_URL=ecto://{{ postgres_admin_user }}:{{ postgres_admin_pass }}@postgres.{{ postgres_net }}/changelog
     --env CM_TOKEN={{ campaign_monitor_token }}
     {{ changelog_app_image }}
-    ./script/prod
-
-- name: compile static assets
-  when: app_version | changed
-  shell: >
-    docker run --rm --tty
-    --name dotcom.assets.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
-    --volume {{ web_volume_path }}/dotcom:/app:rw
-    --workdir /app
-    --log-driver syslog --log-opt tag=dotcom.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }} --log-opt syslog-address={{ papertrail_log_destination }}
-    --env MIX_ENV=prod
-    node:6.3.0
-    ./script/compile_static_assets
+    ./script/run
 
 - name: create legacy content dir
   file:
