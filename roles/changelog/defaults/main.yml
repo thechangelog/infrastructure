@@ -2,3 +2,4 @@
 # changelog_https_key: required, ensure it is defined securely
 # changelog_https_chain: required, ensure it is defined securely
 changelog_max_upload_size_mb: 60
+changelog_app_image: gerhard/elixir:1.3.2-erl18.3.4.1-ffmpeg-mp3
