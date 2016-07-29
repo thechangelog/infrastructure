@@ -23,9 +23,9 @@ server {
 
   client_max_body_size {{ changelog_max_upload_size_mb }}M;
 
-  location / {
-    root /var/www/dotcom/priv/static;
+  root /var/www/dotcom/priv/static;
 
+  location / {
     try_files $uri @dotcom;
   }
 
