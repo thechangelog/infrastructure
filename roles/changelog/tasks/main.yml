@@ -12,7 +12,7 @@
     docker pull {{ changelog_app_image }}
 
 - name: install dependencies
-  when: app_version | changed
+  when: app_version | changed or changelog_force_deploy
   shell: >
     docker run --rm --tty
     --name dotcom.deps.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
@@ -24,7 +24,7 @@
     ./script/deps_install --only prod
 
 - name: compile assets
-  when: app_version | changed
+  when: app_version | changed or changelog_force_deploy
   shell: >
     docker run --rm --tty
     --name dotcom.assets.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
@@ -36,7 +36,7 @@
     ./script/assets_compile
 
 - name: digest assets
-  when: app_version | changed
+  when: app_version | changed or changelog_force_deploy
   shell: >
     docker run --rm --tty
     --name dotcom.assets.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
@@ -48,7 +48,7 @@
     ./script/assets_digest
 
 - name: migrate db
-  when: app_version | changed
+  when: app_version | changed or changelog_force_deploy
   shell: >
     docker run --rm --tty
     --name dotcom.db.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
