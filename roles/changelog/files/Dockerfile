@@ -48,4 +48,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && which ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
+RUN mix local.hex --force
+
 CMD ["iex"]
