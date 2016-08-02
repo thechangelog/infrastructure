@@ -1,0 +1,35 @@
+#/* vim: set ft=cfg : */
+
+server {
+  listen 80;
+  server_name {{ fqdn }};
+  return 301 https://{{ fqdn }}$request_uri;
+}
+
+server {
+  listen 443 ssl;
+  server_name {{ fqdn }};
+
+  # All user agents will use https://, remember for 1 year
+  # Add this domain to the user agent's HSTS preload list
+  add_header Strict-Transport-Security 'max-age=31536000; preload';
+  # The page can only be displayed in a frame on the same origin as the page itself
+  add_header X-Frame-Options SAMEORIGIN;
+
+  ssl on;
+  ssl_certificate /etc/ssl/star.changelog.com.crt;
+  ssl_certificate_key /etc/ssl/star.changelog.com.key;
+  ssl_trusted_certificate /etc/ssl/star.changelog.com.fullchain.pem;
+
+  location / {
+    proxy_pass http://concourse-web:{{ concourse_web_port }};
+    proxy_buffering off;
+    proxy_cache off;
+    proxy_read_timeout 5m;
+    proxy_send_timeout 5m;
+  }
+
+  include /etc/nginx/conf.d/disable_favicon_logging.server;
+  include /etc/nginx/conf.d/disable_robots_logging.server;
+  include /etc/nginx/conf.d/disable_hidden.server;
+}

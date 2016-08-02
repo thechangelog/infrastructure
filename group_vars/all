@@ -17,3 +17,6 @@ changelog_https_key: "{{ lookup('env', 'HTTPS_KEY') }}"
 changelog_https_chain: "{{ lookup('env', 'HTTPS_CHAIN') }}"
 
 campaign_monitor_token: "{{ lookup('env', 'CM_TOKEN') }}"
+
+concourse_postgres_pass: "{{ lookup('env', 'PG_CONCOURSE_PASS') }}"
+concourse_auth_pass: "{{ lookup('env', 'CONCOURSE_AUTH_PASS') }}"

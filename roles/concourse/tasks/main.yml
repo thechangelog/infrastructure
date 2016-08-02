@@ -1,0 +1,97 @@
+- name: ensure volume dirs exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+  with_items:
+    - "{{ concourse_keys_dir }}"
+    - "{{ concourse_store_dir }}"
+
+- name: generate RSA keys
+  shell: >
+    ssh-keygen -b 2048 -t rsa -f {{ concourse_keys_dir }}/{{ item }} -q -N ""
+  args:
+    chdir: "{{ concourse_keys_dir }}"
+    creates: "{{ item }}"
+  with_items:
+    - tsa_host_key
+    - session_signing_key
+    - worker_key
+
+- name: create postgres db
+  postgresql_db:
+    login_host: 127.0.0.1
+    login_user: "{{ postgres_admin_user }}"
+    login_password: "{{ postgres_admin_pass }}"
+    name: "{{ concourse_postgres_db }}"
+    state: present
+
+- name: create postgres user
+  postgresql_user:
+    login_host: 127.0.0.1
+    login_user: "{{ postgres_admin_user }}"
+    login_password: "{{ postgres_admin_pass }}"
+    db: "{{ concourse_postgres_db }}"
+    name: "{{ concourse_postgres_user }}"
+    password: "{{ concourse_postgres_pass }}"
+    priv: ALL
+    state: present
+
+- name: ensure concourse-web is running
+  docker:
+    name: concourse-web
+    image: "concourse/concourse:{{ concourse_version }}"
+    command: web
+    pull: missing
+    state: reloaded
+    restart_policy: unless-stopped
+    net: "{{ nginx_net }}"
+    env:
+      CONCOURSE_BASIC_AUTH_USERNAME: "{{ concourse_auth_user }}"
+      CONCOURSE_BASIC_AUTH_PASSWORD: "{{ concourse_auth_pass }}"
+      CONCOURSE_EXTERNAL_URL: "https://{{ fqdn }}"
+      CONCOURSE_POSTGRES_DATA_SOURCE: "postgres://{{ concourse_postgres_user }}:{{ concourse_postgres_pass }}@postgres.{{ postgres_net }}/{{ concourse_postgres_db }}?sslmode=disable"
+      CONCOURSE_TSA_AUTHORIZED_KEYS: "/concourse-keys/worker_key.pub"
+    volumes:
+      - "{{ concourse_keys_dir }}:/concourse-keys:ro"
+    tty: yes
+    log_driver: syslog
+    log_opt:
+      syslog-address: "{{ papertrail_log_destination }}"
+      tag: "concourse-web"
+
+- name: ensure concourse-worker is running
+  docker:
+    name: concourse-worker
+    image: "concourse/concourse:{{ concourse_version }}"
+    command: worker
+    privileged: true
+    pull: missing
+    state: reloaded
+    restart_policy: unless-stopped
+    net: "{{ postgres_net }}"
+    env:
+      CONCOURSE_POSTGRES_DATA_SOURCE: "postgres://{{ concourse_postgres_user }}:{{ concourse_postgres_pass }}@postgres.{{ postgres_net }}/{{ concourse_postgres_db }}?sslmode=disable"
+      CONCOURSE_TSA_AUTHORIZED_KEYS: "/concourse-keys/worker_key.pub"
+      CONCOURSE_TSA_HOST: concourse-web
+      CONCOURSE_TSA_PUBLIC_KEY: /concourse-keys/tsa_host_key.pub
+    volumes:
+      - "{{ concourse_keys_dir }}:/concourse-keys:ro"
+      - "{{ concourse_store_dir }}:/worker-state:rw"
+    tty: yes
+    log_driver: syslog
+    log_opt:
+      syslog-address: "{{ papertrail_log_destination }}"
+      tag: "concourse-worker"
+
+- name: configure nginx proxy
+  template:
+    src: nginx.concourse.j2
+    dest: "{{ nginx_config_dir }}/sites/{{ fqdn }}.site"
+
+- name: reload nginx
+  shell: >
+    docker exec nginx.{{ nginx_net }} nginx -t &&
+    docker kill -s HUP nginx.{{ nginx_net }}

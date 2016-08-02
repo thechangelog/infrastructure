@@ -43,7 +43,6 @@
     https: true
     https_common_name: "*.changelog.com"
     path: "/wp-content/uploads/blinksale-image.jpg"
-    response_server: nginx
 
   - role: check
     tags: [check, static]
@@ -51,3 +50,17 @@
     https_common_name: "*.changelog.com"
     path: "/css/app.css"
     response_server: nginx
+
+- name: concourse
+  hosts: ci
+  gather_facts: true
+
+  roles:
+    - role: concourse
+      tags: [concourse]
+
+    - role: check
+      tags: [check]
+      https: true
+      https_common_name: "*.changelog.com"
+      response_status: HTTP/1.1 302 Found

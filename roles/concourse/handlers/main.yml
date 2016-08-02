@@ -1,0 +1,8 @@
+- name: restart concourse-web
+  shell: sv try-restart /etc/service/concourse-web
+
+- name: restart concourse-worker
+  shell: sv try-restart /etc/service/concourse-worker
+
+- name: restart concourse
+  shell: sv try-restart /etc/service/concourse-*
