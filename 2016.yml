@@ -20,16 +20,16 @@
     - role: postgres
       tags: [postgres]
 
+    - role: changelog
+      tags: [changelog]
+
 - name: dotcom
   hosts: app
   gather_facts: false
 
-  vars:
-    changelog_app_repository: git@github.com:thechangelog/dotcom.git
-
   roles:
-  - role: changelog
-    tags: [changelog]
+  - role: dotcom
+    tags: [dotcom]
 
   - role: check
     tags: [check, https]

@@ -21,7 +21,7 @@ server {
   ssl_certificate_key /etc/ssl/star.changelog.com.key;
   ssl_trusted_certificate /etc/ssl/star.changelog.com.fullchain.pem;
 
-  client_max_body_size {{ changelog_max_upload_size_mb }}M;
+  client_max_body_size {{ dotcom_max_upload_size_mb }}M;
 
   root /var/www/dotcom/priv/static;
 

@@ -1,0 +1,111 @@
+- name: checkout app
+  register: app_version
+  git:
+    accept_hostkey: yes
+    dest: "{{ web_volume_path }}/dotcom"
+    force: yes
+    update: yes
+    repo: "{{ dotcom_app_repository }}"
+
+- name: pull app image
+  shell: >
+    docker pull {{ dotcom_app_image }}
+
+- name: install dependencies
+  when: app_version | changed or dotcom_force_deploy
+  shell: >
+    docker run --rm --tty
+    --name dotcom.deps.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
+    --volume {{ web_volume_path }}/dotcom:/app:rw
+    --workdir /app
+    --log-driver syslog --log-opt tag=dotcom.deps.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }} --log-opt syslog-address={{ papertrail_log_destination }}
+    --env MIX_ENV=prod
+    {{ dotcom_app_image }}
+    ./script/deps_install --only prod
+
+- name: compile assets
+  when: app_version | changed or dotcom_force_deploy
+  shell: >
+    docker run --rm --tty
+    --name dotcom.assets.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
+    --volume {{ web_volume_path }}/dotcom:/app:rw
+    --workdir /app
+    --log-driver syslog --log-opt tag=dotcom.assets.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }} --log-opt syslog-address={{ papertrail_log_destination }}
+    --env MIX_ENV=prod
+    {{ dotcom_assets_image }}
+    ./script/assets_compile
+
+- name: digest assets
+  when: app_version | changed or dotcom_force_deploy
+  shell: >
+    docker run --rm --tty
+    --name dotcom.assets.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
+    --volume {{ web_volume_path }}/dotcom:/app:rw
+    --workdir /app
+    --log-driver syslog --log-opt tag=dotcom.assets.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }} --log-opt syslog-address={{ papertrail_log_destination }}
+    --env MIX_ENV=prod
+    {{ dotcom_app_image }}
+    ./script/assets_digest
+
+- name: migrate db
+  when: app_version | changed or dotcom_force_deploy
+  shell: >
+    docker run --rm --tty
+    --name dotcom.db.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
+    --volume {{ web_volume_path }}/dotcom:/app:rw
+    --net {{ nginx_net }}
+    --workdir /app
+    --log-driver syslog --log-opt tag=dotcom.db.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }} --log-opt syslog-address={{ papertrail_log_destination }}
+    --env MIX_ENV=prod
+    --env DB_URL=ecto://{{ postgres_admin_user }}:{{ postgres_admin_pass }}@postgres.{{ postgres_net }}/changelog
+    {{ dotcom_app_image }}
+    ./script/db_migrate
+
+- name: deploy latest app version
+  shell: >
+    docker run --detach --tty
+    --restart unless-stopped
+    --label fqdn={{ fqdn }}
+    --name dotcom.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }}
+    --net {{ nginx_net }}
+    --net-alias dotcom
+    --volume {{ web_volume_path }}/dotcom:/app:rw
+    --workdir /app
+    --log-driver syslog --log-opt tag=dotcom.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }} --log-opt syslog-address={{ papertrail_log_destination }}
+    --env MIX_ENV=prod
+    --env PORT=4000
+    --env DB_URL=ecto://{{ postgres_admin_user }}:{{ postgres_admin_pass }}@postgres.{{ postgres_net }}/changelog
+    --env CM_TOKEN={{ campaign_monitor_token }}
+    {{ dotcom_app_image }}
+    ./script/run
+
+- name: create legacy content dir
+  file:
+    dest: "{{ web_volume_path }}/legacy"
+    state: directory
+
+- name: configure nginx site
+  template:
+    src: 2016.changelog.com.j2
+    dest: "{{ nginx_config_dir }}/sites/{{ fqdn }}.site"
+
+- name: reload nginx so that it resolves the new app host
+  shell: >
+    docker exec nginx.{{ nginx_net }} nginx -t &&
+    docker kill -s HUP nginx.{{ nginx_net }}
+
+- name: find all app instances older than the last one
+  register: venerable_apps
+  shell: >
+    docker ps -q --filter label=fqdn={{ fqdn }} | tail -n +2
+
+- name: cleanup app instances older than the last one
+  ignore_errors: true
+  shell: >
+    docker stop {{ venerable_apps.stdout_lines | join(" ") }} ;
+    docker rm -f {{ venerable_apps.stdout_lines | join(" ") }}
+
+- name: reload nginx so that it removes all venerable app hosts
+  shell: >
+    docker exec nginx.{{ nginx_net }} nginx -t &&
+    docker kill -s HUP nginx.{{ nginx_net }}
