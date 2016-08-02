@@ -1,3 +1,11 @@
+- name: create app dirs
+  file:
+    dest: "{{ web_volume_path }}/{{ item }}"
+    state: directory
+  with_items:
+    - legacy
+    - uploads
+
 - name: checkout app
   register: app_version
   git:
@@ -70,6 +78,7 @@
     --net {{ nginx_net }}
     --net-alias dotcom
     --volume {{ web_volume_path }}/dotcom:/app:rw
+    --volume {{ web_volume_path }}/uploads:/uploads:rw
     --workdir /app
     --log-driver syslog --log-opt tag=dotcom.{{ lookup('pipe','date +%Y%m%d.%H%M%S') }} --log-opt syslog-address={{ papertrail_log_destination }}
     --env MIX_ENV=prod
@@ -78,11 +87,6 @@
     --env CM_TOKEN={{ campaign_monitor_token }}
     {{ dotcom_app_image }}
     ./script/run
-
-- name: create legacy content dir
-  file:
-    dest: "{{ web_volume_path }}/legacy"
-    state: directory
 
 - name: configure nginx site
   template:
