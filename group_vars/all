@@ -1,6 +1,6 @@
 #/* vim: set ft=yaml : */
 
-papertrail_log_destination: tcp+tls://logs4.papertrailapp.com:35714
+papertrail_log_destination: tcp+tls://logs4.papertrailapp.com:22910
 
 authorized_keys: "{{ lookup('env', 'AUTHORIZED_KEYS') }}"
 
