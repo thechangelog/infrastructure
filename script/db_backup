@@ -2,8 +2,15 @@
 
 [ -z "$DEBUG" ] || set -x
 
-ssh_host="2016.changelog.com"
+read -rp "DB to backup (defaults to changelog): " pg_db
+pg_db="${pg_db:-changelog}"
+
+read -rp "PostgreSQL host (defaults to 2016.changelog.com): " ssh_host
+ssh_host="${ssh_host:-2016.changelog.com}"
 ssh_user="root"
+ssh_socket="$ssh_host.sock"
+
+pg_dump_file="$HOME/Downloads/$pg_db.$(date +%Y%m%d.%H%M).sql"
 
 pg_local_port=15432
 pg_ip=127.0.0.1
@@ -12,12 +19,10 @@ pg_port=5432
 pg_user="$(lpass show --username 1394836924033726964)"
 pg_pass="$(lpass show --password 1394836924033726964)"
 
-pg_db=changelog
-pg_dump_file="$HOME/Downloads/$pg_db.$(date +%Y%m%d.%H%M).sql"
-
 main() {
   install_dependencies
-  open_tunnel_to_app_host
+  open_tunnel_to_remote_host
+  trap close_tunnel_to_remote_host EXIT
   backup_db
 }
 
@@ -25,21 +30,22 @@ install_dependencies() {
   brew install postgresql 2>/dev/null
 }
 
-open_tunnel_to_app_host() {
-  lsof -nPi TCP:$pg_local_port >/dev/null ||
-  ssh -NfL $pg_local_port:$pg_ip:$pg_port $ssh_user@$ssh_host
+open_tunnel_to_remote_host() {
+  ssh -MS "$ssh_socket" -NfL $pg_local_port:$pg_ip:$pg_port "$ssh_user"@"$ssh_host"
+}
+
+close_tunnel_to_remote_host() {
+  ssh -S "$ssh_socket" -O exit "$ssh_user"@"$ssh_host" 2>/dev/null
 }
 
 backup_db() {
-  echo -n "Backing up $pg_db db from $ssh_host to $pg_dump_file ... "
-
   PGPASSWORD="$pg_pass" pg_dump \
     --host $pg_ip --port $pg_local_port --username "$pg_user" \
+    --no-owner --no-privileges --clean --if-exists --verbose \
     --file "$pg_dump_file" \
-    --no-owner --no-privileges \
-    $pg_db
+    "$pg_db"
 
-  echo "DONE!"
+  echo -e "\nOK! $pg_db db from host $ssh_host successfully backed up to $pg_dump_file"
 }
 
 main
