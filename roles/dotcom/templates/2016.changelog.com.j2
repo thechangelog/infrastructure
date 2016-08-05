@@ -23,7 +23,7 @@ server {
 
   client_max_body_size {{ dotcom_max_upload_size_mb }}M;
 
-  root /var/www/dotcom/priv/static;
+  root /var/www/dotcom/_build/prod/lib/changelog/priv/static;
 
   location / {
     try_files $uri @dotcom;
@@ -35,7 +35,7 @@ server {
   }
 
   location ^~ /uploads {
-    root /var/www/dotcom/priv;
+    root /var/www/dotcom/_build/prod/lib/changelog/priv;
   }
 
   location ^~ /wp-content {

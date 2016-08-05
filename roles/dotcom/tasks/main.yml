@@ -4,7 +4,6 @@
     state: directory
   with_items:
     - legacy
-    - uploads
 
 - name: checkout app
   register: app_version
@@ -85,8 +84,6 @@
     --net {{ nginx_net }}
     --net-alias dotcom
     --volume {{ web_volume_path }}/dotcom:/app:rw
-    --volume {{ web_volume_path }}/uploads:/app/_build/prod/lib/changelog/priv/uploads:rw
-    --volume {{ web_volume_path }}/uploads:/app/priv/uploads:rw
     --workdir /app
     --log-driver syslog --log-opt tag={{ app_name.stdout }} --log-opt syslog-address={{ papertrail_log_destination }}
     --env MIX_ENV=prod
