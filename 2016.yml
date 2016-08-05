@@ -49,7 +49,12 @@
     https: true
     https_common_name: "*.changelog.com"
     path: "/css/app.css"
-    response_server: nginx
+
+  - role: check
+    tags: [check, uploads]
+    https: true
+    https_common_name: "*.changelog.com"
+    path: "/uploads/avatars/V1/avatar_small.png"
 
 - name: concourse
   hosts: ci
