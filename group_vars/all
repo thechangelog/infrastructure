@@ -9,6 +9,7 @@ postgres_admin_user: postgres
 postgres_admin_pass: "{{ lookup('env', 'PG_ADMIN_PASS') }}"
 
 nginx_net: web
+nginx_config_dir: /data/nginx
 web_volume_path: /data/www
 
 changelog_https_cert: "{{ lookup('env', 'HTTPS_CERT') }}"
