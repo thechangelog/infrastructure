@@ -1,0 +1,49 @@
+# Assumes Docker is already set up & working locally
+# https://docs.docker.com/docker-for-mac/
+
+- name: Configure /etc/hosts
+  hosts: localhost
+
+  tasks:
+    - name: resolve FQDN to localhost
+      become: true
+      lineinfile:
+        dest: /etc/hosts
+        state: present
+        line: "127.0.0.1 {{ fqdn }}"
+
+- name: Deploy dotcom app on the development host
+  hosts: localhost
+
+  vars:
+    https_checks:
+      - "'Server certificate: *.changelog.com' in  http_response.stderr"
+      - "'Server certificate: COMODO RSA Domain Validation Secure Server CA' in  http_response.stderr"
+      - "'Server certificate: COMODO RSA Certification Authority' in  http_response.stderr"
+      - "'Server certificate: AddTrust External CA Root' in  http_response.stderr"
+
+  roles:
+    - role: nginx
+      tags: [nginx]
+
+    - role: postgres
+      tags: [postgres]
+
+    - role: changelog
+      tags: [changelog]
+
+    - role: dotcom
+      tags: [dotcom]
+
+    - role: check
+      tags: [check, https]
+      https: true
+      force_https: true
+      https_common_name: "*.changelog.com"
+      response_server: Cowboy
+
+    - role: check
+      tags: [check, static]
+      https: true
+      https_common_name: "*.changelog.com"
+      path: "/css/app.css"

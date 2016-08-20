@@ -9,12 +9,14 @@ postgres_admin_user: postgres
 postgres_admin_pass: "{{ lookup('env', 'PG_ADMIN_PASS') }}"
 
 nginx_net: web
-nginx_config_dir: /data/nginx
+nginx_sites_dir: /data/nginx/sites
 web_volume_path: /data/www
 
 changelog_https_cert: "{{ lookup('env', 'HTTPS_CERT') }}"
 changelog_https_key: "{{ lookup('env', 'HTTPS_KEY') }}"
 changelog_https_chain: "{{ lookup('env', 'HTTPS_CHAIN') }}"
+
+dotcom_app_repository: git@github.com:thechangelog/dotcom.git
 
 campaign_monitor_token: "{{ lookup('env', 'CM_TOKEN') }}"
 

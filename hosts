@@ -1,3 +1,6 @@
 [2016]
-app ansible_ssh_host=198.74.61.95 ansible_ssh_user=root
-ci ansible_ssh_host=45.56.99.251 ansible_ssh_user=root
+app ansible_host=198.74.61.95 ansible_user=root
+ci ansible_host=45.56.99.251 ansible_user=root
+
+[localhost]
+localhost ansible_connection=local

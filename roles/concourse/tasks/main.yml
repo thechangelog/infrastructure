@@ -20,6 +20,16 @@
     - session_signing_key
     - worker_key
 
+- name: install psycopg2 dependencies
+  apt:
+    name: libpq-dev
+    state: present
+
+- name: install Ansible PostgreSQL dependency
+  pip:
+    name: psycopg2
+    state: present
+
 - name: create postgres db
   postgresql_db:
     login_host: 127.0.0.1

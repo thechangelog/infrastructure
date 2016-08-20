@@ -1,4 +1,5 @@
+#/* vim: set ft=yaml : */
+
 docker_data_size: 20G
 docker_volumes_size: 300G
 fqdn: 2016.changelog.com
-dotcom_app_repository: git@github.com:thechangelog/dotcom.git

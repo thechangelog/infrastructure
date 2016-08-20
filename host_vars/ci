@@ -1,3 +1,5 @@
+#/* vim: set ft=yaml : */
+
 docker_data_size: 10G
 docker_volumes_size: 20G
 fqdn: ci.changelog.com

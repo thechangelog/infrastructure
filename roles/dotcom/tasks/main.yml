@@ -21,7 +21,7 @@
   args:
     chdir: "{{ web_volume_path }}/dotcom"
 
-- name: pull app image
+- name: ensure app image exists
   shell: >
     docker pull {{ dotcom_app_image }}
 
@@ -36,6 +36,10 @@
     --env MIX_ENV=prod
     {{ dotcom_app_image }}
     ./script/deps_install --only prod
+
+- name: ensure app assets image exists
+  shell: >
+    docker pull {{ dotcom_assets_image }}
 
 - name: compile assets
   when: app_version | changed or dotcom_force_deploy
@@ -96,7 +100,7 @@
 - name: configure nginx site
   template:
     src: 2016.changelog.com.j2
-    dest: "{{ nginx_config_dir }}/sites/{{ fqdn }}.site"
+    dest: "{{ nginx_sites_dir }}/{{ fqdn }}.site"
 
 - name: reload nginx so that it resolves the new app host
   shell: >

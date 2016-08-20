@@ -17,9 +17,9 @@ server {
   add_header X-Frame-Options SAMEORIGIN;
 
   ssl on;
-  ssl_certificate /etc/ssl/star.changelog.com.crt;
-  ssl_certificate_key /etc/ssl/star.changelog.com.key;
-  ssl_trusted_certificate /etc/ssl/star.changelog.com.fullchain.pem;
+  ssl_certificate /etc/nginx/ssl/star.changelog.com.crt;
+  ssl_certificate_key /etc/nginx/ssl/star.changelog.com.key;
+  ssl_trusted_certificate /etc/nginx/ssl/star.changelog.com.fullchain.pem;
 
   location / {
     proxy_pass http://concourse-web:{{ concourse_web_port }};
