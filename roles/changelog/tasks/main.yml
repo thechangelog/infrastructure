@@ -18,12 +18,3 @@
     content: "{{ changelog_https_chain }}"
     dest: "{{ nginx_config_dir }}/ssl/star.changelog.com.fullchain.pem"
     mode: 0644
-
-- name: cleanup legacy HTTPS artefacts
-  file:
-    path: "{{ item }}"
-    state: absent
-  with_items:
-    - /etc/ssl/star.changelog.com.crt
-    - /etc/ssl/star.changelog.com.key
-    - /etc/ssl/star.changelog.com.fullchain.pem
