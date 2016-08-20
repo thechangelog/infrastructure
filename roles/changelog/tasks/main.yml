@@ -2,21 +2,21 @@
   notify: restart nginx
   copy:
     content: "{{ changelog_https_cert }}"
-    dest: "{{ nginx_ssl_dir }}/star.changelog.com.crt"
+    dest: "{{ nginx_config_dir }}/ssl/star.changelog.com.crt"
     mode: 0644
 
 - name: configure HTTPS key
   notify: restart nginx
   copy:
     content: "{{ changelog_https_key }}"
-    dest: "{{ nginx_ssl_dir }}/star.changelog.com.key"
+    dest: "{{ nginx_config_dir }}/ssl/star.changelog.com.key"
     mode: 0644
 
 - name: configure HTTPS chain
   notify: restart nginx
   copy:
     content: "{{ changelog_https_chain }}"
-    dest: "{{ nginx_ssl_dir }}/star.changelog.com.fullchain.pem"
+    dest: "{{ nginx_config_dir }}/ssl/star.changelog.com.fullchain.pem"
     mode: 0644
 
 - name: cleanup legacy HTTPS artefacts

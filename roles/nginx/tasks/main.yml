@@ -5,14 +5,14 @@
     recurse: yes
   with_items:
     - "{{ nginx_config_dir }}/conf.d"
-    - "{{ nginx_ssl_dir }}"
-    - "{{ nginx_sites_dir }}"
+    - "{{ nginx_config_dir }}/ssl"
+    - "{{ nginx_config_dir }}/sites"
 
 - name: generate Diffie Hellman parameter
   command: >
     openssl dhparam -out {{ nginx_config_dir }}/ssl/dhparam.pem {{ nginx_dhparam_size }}
   args:
-    creates: "{{ nginx_ssl_dir }}/dhparam.pem"
+    creates: "{{ nginx_config_dir }}/ssl/dhparam.pem"
 
 - name: cleanup legacy Diffie Hellman parameter
   file:
@@ -60,7 +60,7 @@
   notify: reload nginx
   template:
     src: default.site.j2
-    dest: "{{ nginx_sites_dir }}/default.site"
+    dest: "{{ nginx_config_dir }}/sites/default.site"
 
 - name: ensure container image exists
   shell: >
@@ -81,8 +81,8 @@
       - "{{ nginx_config_dir }}/cache:/usr/share/nginx/cache:rw"
       - "{{ nginx_config_dir }}/nginx.conf:/etc/nginx/nginx.conf:ro"
       - "{{ nginx_config_dir }}/conf.d:/etc/nginx/conf.d:ro"
-      - "{{ nginx_ssl_dir }}:/etc/nginx/ssl:ro"
-      - "{{ nginx_sites_dir }}:/etc/nginx/sites:ro"
+      - "{{ nginx_config_dir }}/ssl:/etc/nginx/ssl:ro"
+      - "{{ nginx_config_dir }}/sites:/etc/nginx/sites:ro"
       - "{{ web_volume_path }}:/var/www:ro"
     log_driver: syslog
     log_opt:
