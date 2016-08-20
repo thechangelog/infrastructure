@@ -4,6 +4,7 @@
     state: directory
   with_items:
     - legacy
+    - uploads
 
 - name: checkout app
   register: app_version
@@ -25,8 +26,8 @@
   shell: >
     docker pull {{ dotcom_app_image }}
 
-- name: install dependencies
   when: app_version | changed or dotcom_force_deploy
+- name: build app
   shell: >
     docker run --rm --tty
     --name {{ app_name.stdout }}-deps
@@ -88,6 +89,7 @@
     --net {{ nginx_net }}
     --net-alias dotcom
     --volume {{ web_volume_path }}/dotcom:/app:rw
+    --volume {{ web_volume_path }}/uploads:/uploads:rw
     --workdir /app
     --log-driver syslog --log-opt tag={{ app_name.stdout }} --log-opt syslog-address={{ papertrail_log_destination }}
     --env MIX_ENV=prod
