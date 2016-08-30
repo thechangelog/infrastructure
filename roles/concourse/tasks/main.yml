@@ -67,10 +67,7 @@
     volumes:
       - "{{ concourse_keys_dir }}:/concourse-keys:ro"
     tty: yes
-    log_driver: syslog
-    log_opt:
-      syslog-address: "{{ papertrail_log_destination }}"
-      tag: "concourse-web"
+    log_driver: json-file
 
 - name: ensure concourse-worker is running
   docker:
@@ -91,10 +88,7 @@
       - "{{ concourse_keys_dir }}:/concourse-keys:ro"
       - "{{ concourse_store_dir }}:/worker-state:rw"
     tty: yes
-    log_driver: syslog
-    log_opt:
-      syslog-address: "{{ papertrail_log_destination }}"
-      tag: "concourse-worker"
+    log_driver: json-file
 
 - name: configure nginx proxy
   template:
