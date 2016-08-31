@@ -56,6 +56,15 @@
     https_common_name: "*.changelog.com"
     path: "/uploads/avatars/V1/avatar_small.png"
 
+  - role: check
+    tags: [check, changelogfm]
+    fqdn: changelog.fm
+    path: "/1"
+    http_checks:
+      - "'Host: changelog.fm' in http_response.stderr"
+      - "'HTTP/1.1 301 Moved Permanently' in http_response.stderr"
+      - "'Location: https://2016.changelog.com/podcast/1' in http_response.stderr"
+
 - name: concourse
   hosts: ci
   gather_facts: true
