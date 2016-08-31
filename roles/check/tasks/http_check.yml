@@ -10,12 +10,9 @@
 
 - name: check http response
   assert:
-    that:
-      - "'Host: {{ fqdn }}' in http_response.stderr"
-      - "response_status in http_response.stderr"
-      - "response_server in http_response.stderr"
+    that: "{{ http_checks }}"
 
-- name: check https
+- name: check https response
   when: https
   assert:
     that: "{{ https_checks }}"
