@@ -2,7 +2,8 @@
   command: apt-get update
 
 - name: upgrade packages
-  command: apt-get -y upgrade
+  shell: >
+    DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confnew" -y upgrade
 
 - name: install common system packages via apt
   apt: pkg={{ item }} state=latest
