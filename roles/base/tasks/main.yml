@@ -1,5 +1,6 @@
 - name: update package sources
-  command: apt-get update
+  shell: >
+    DEBIAN_FRONTEND=noninteractive apt-get update
 
 - name: upgrade packages
   shell: >
@@ -17,7 +18,8 @@
     state: started
 
 - name: cleanup packaged that are no longer required
-  command: apt-get -y autoremove
+  shell: >
+    DEBIAN_FRONTEND=noninteractive apt-get -y autoremove
 
 - name: Prefer IPv4
   lineinfile: dest=/etc/gai.conf line='precedence ::ffff:0:0/96  100'
