@@ -94,4 +94,4 @@
       tags: [check]
       https: true
       https_common_name: "*.changelog.com"
-      response_status: HTTP/1.1 302 Found
+      response_body: "no pipelines configured"

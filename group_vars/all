@@ -4,21 +4,13 @@ papertrail_log_destination: tcp+tls://logs4.papertrailapp.com:22910
 
 authorized_keys: "{{ lookup('env', 'AUTHORIZED_KEYS') }}"
 
-postgres_net: web
-postgres_admin_user: postgres
-postgres_admin_pass: "{{ lookup('env', 'PG_ADMIN_PASS') }}"
-
 nginx_net: web
 nginx_config_dir: /data/nginx
+
 web_volume_path: /data/www
+
+postgres_net: web
 
 changelog_https_cert: "{{ lookup('env', 'HTTPS_CERT') }}"
 changelog_https_key: "{{ lookup('env', 'HTTPS_KEY') }}"
 changelog_https_chain: "{{ lookup('env', 'HTTPS_CHAIN') }}"
-
-dotcom_app_repository: git@github.com:thechangelog/dotcom.git
-
-campaign_monitor_token: "{{ lookup('env', 'CM_TOKEN') }}"
-
-concourse_postgres_pass: "{{ lookup('env', 'PG_CONCOURSE_PASS') }}"
-concourse_auth_pass: "{{ lookup('env', 'CONCOURSE_AUTH_PASS') }}"

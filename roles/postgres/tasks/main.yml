@@ -24,6 +24,7 @@
     env:
       POSTGRES_USER: "{{ postgres_admin_user }}"
       POSTGRES_PASSWORD: "{{ postgres_admin_pass }}"
+      POSTGRES_DB: "{{ postgres_default_db }}"
     volumes:
       - "{{ postgres_volume_path }}:/var/lib/postgresql/data:rw"
     ports:

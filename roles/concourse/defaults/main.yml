@@ -1,4 +1,4 @@
-concourse_version: "1.6.0"
+concourse_version: "2.0.2"
 concourse_keys_dir: /data/concourse/keys
 concourse_store_dir: /data/concourse/store
 concourse_web_ip: 127.0.0.1
