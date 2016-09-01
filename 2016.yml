@@ -39,6 +39,13 @@
     response_server: Cowboy
 
   - role: check
+    tags: [check, http]
+    http_checks:
+      - "'Host: {{ fqdn }}' in http_response.stderr"
+      - "'HTTP/1.1 301 Moved Permanently' in http_response.stderr"
+      - "'Location: https://{{ fqdn }}/' in http_response.stderr"
+
+  - role: check
     tags: [check, legacy, uploads]
     https: true
     https_common_name: "*.changelog.com"
