@@ -1,8 +1,9 @@
-/var/lib/docker/containers/*/*.log {
+/var/lib/docker/containers/*/*-json.log {
   rotate 7
   daily
-  compress
   missingok
-  delaycompress
+  notifempty
   copytruncate
+  compress
+  delaycompress
 }
