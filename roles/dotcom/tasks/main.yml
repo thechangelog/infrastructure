@@ -1,10 +1,12 @@
 - name: create app dirs
+  tags: backup
   file:
     dest: "{{ web_volume_path }}/{{ item }}"
     state: directory
   with_items:
     - legacy
     - uploads
+    - db
 
 - name: checkout app
   register: app_version
@@ -126,6 +128,23 @@
     docker exec nginx.{{ nginx_net }} nginx -t &&
     docker kill -s HUP nginx.{{ nginx_net }}
 
+- name: backup db
+  tags: backup
+  when: backup | default(false)
+  shell: >
+    docker run --rm --tty
+    --name {{ app_name.stdout }}-db-backup
+    --net {{ postgres_net }}
+    --volume {{ web_volume_path }}/db:/db:rw
+    --log-driver syslog --log-opt tag={{ app_name.stdout }}-db-backup --log-opt syslog-address={{ papertrail_log_destination }}
+    --env PGHOST=postgres.{{ postgres_net }}
+    --env PGPORT=5432
+    --env PGUSER={{ postgres_admin_user }}
+    --env PGPASSWORD={{ postgres_admin_pass }}
+    --env PGDATABASE=changelog
+    postgres
+    sh -c "pg_dump --no-owner --no-privileges --clean --if-exists --verbose --file /db/{{ app_name.stdout }}.sql"
+
 - name: backup to S3
   tags: backup
   when: backup | default(false)
@@ -134,7 +153,14 @@
     --name {{ app_name.stdout }}-backup
     --volume {{ web_volume_path }}/uploads:/uploads:ro
     --volume {{ web_volume_path }}/legacy:/legacy:ro
+    --volume {{ web_volume_path }}/db:/db:ro
     --volume {{ web_volume_path }}/dotcom/_build/prod:/github.com/dotcom/_build/prod:ro
     --log-driver syslog --log-opt tag={{ app_name.stdout }}-backup --log-opt syslog-address={{ papertrail_log_destination }}
     {{ dotcom_backup_image }}
-    sh -c "tar -cf - uploads legacy github.com | AWS_ACCESS_KEY_ID={{ dotcom_backup_aws_access_key_id }} AWS_SECRET_ACCESS_KEY={{ dotcom_backup_aws_secret_access_key }} gof3r put -b {{ dotcom_backup_s3_bucket }} -k {{ app_name.stdout }}.tar --endpoint {{ dotcom_backup_aws_region }}"
+    sh -c "tar -cf - uploads legacy db github.com | AWS_ACCESS_KEY_ID={{ dotcom_backup_aws_access_key_id }} AWS_SECRET_ACCESS_KEY={{ dotcom_backup_aws_secret_access_key }} gof3r put -b {{ dotcom_backup_s3_bucket }} -k {{ app_name.stdout }}.tar --endpoint {{ dotcom_backup_aws_region }}"
+
+- name: clean db backup dir
+  tags: backup
+  file:
+    path: "{{ web_volume_path }}/db"
+    state: absent
