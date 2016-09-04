@@ -1,0 +1,3 @@
+#/* vim: set ft=yaml : */
+
+check_basic_auth: hacker:heart

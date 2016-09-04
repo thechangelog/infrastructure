@@ -1,7 +1,7 @@
 - name: http response
   register: http_response
   shell: >
-    curl --connect-timeout 3 {{ '-k' if untrusted_ca else '' }} -sv {{ 'https' if https else 'http' }}://{{ fqdn }}{{ path }}
+    curl --connect-timeout 3 {{ '--user ' + check_basic_auth if check_basic_auth else '' }} {{ '-k' if untrusted_ca else '' }} -sv {{ 'https' if https else 'http' }}://{{ fqdn }}{{ path }}
 
 - name: debug http response
   when: debug | default(false)
