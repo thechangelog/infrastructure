@@ -4,9 +4,9 @@ Most of it is Ansible playbooks and roles, but also Dockerfiles, Concourse pipel
 
 When starting out, run `script/setup` first. This will install all required dependencies on OS X. After the initial run, you only need to run `setup` since `$PWD/script` will be added to `$PATH`.
 
-The most important command is `ansible-playbook 2016.yml`. This provisions and keeps all VMs up-to-date.
+The most important command is `ansible-playbook 2016.yml`. This provisions and keeps all servers up-to-date.
 
-If you need to figure out a specific process (e.g. backups, creating a new host, credentials etc.) or want to understand **the why**, look in [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/1650121). The tracker also serves the role of a [wiki](https://www.pivotaltracker.com/n/projects/1650121/search?q=label%3A%22wiki%22).
+If you need to figure out a specific process (e.g. backups, creating a new host, credentials etc.) or want to understand **the why**, look in [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/1650121). The tracker doubles up as a [wiki](https://www.pivotaltracker.com/n/projects/1650121/search?q=label%3A%22wiki%22).
 
 ## Helps
 
