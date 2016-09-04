@@ -1,6 +1,12 @@
-[2016]
-app ansible_host=198.74.61.95 ansible_user=root
-ci ansible_host=45.56.99.251 ansible_user=root
+[2016:children]
+app
+ci
+
+[app]
+nj24gb ansible_host=198.74.61.95 ansible_user=root
+
+[ci]
+nj4gb ansible_host=45.56.99.251 ansible_user=root
 
 [localhost]
 localhost ansible_connection=local
