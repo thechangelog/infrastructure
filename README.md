@@ -1,36 +1,12 @@
-## OS X development setup
+This repository contains everything that is required to provision and manage [The Changelog](https://2016.changelog.com) infrastructure.
 
-Run `script/setup` script for the initial setup. After the initial run, you only need to run `setup` since direnv will prepend `$PWD/script` to `$PATH`.
+Most of it is Ansible playbooks and roles, but also Dockerfiles, Concourse pipeline configurations and scripts that hold everything together.
 
-## New host - first time configuration
+When starting out, run `script/setup` first. This will install all required dependencies on OS X. After the initial run, you only need to run `setup` since `$PWD/script` will be added to `$PATH`.
 
-1) Add host details to **~/.ssh/config**
+The most important command is `ansible-playbook 2016.yml`. This provisions and keeps all VMs up-to-date.
 
-```cfg
-# Prevent SSH connections timing out (poll the server every 60")
-ServerAliveInterval 60
-ServerAliveCountMax 3
-# Forward local keys remotely
-ForwardAgent yes
-
-Host *
-  User root
-
-Host app
-  Hostname 198.74.61.95
-Host ci
-  Hostname 45.56.99.251
-```
-
-2) `ssh-copy-id -f [YOUR PUBLIC KEY] ci`
-
-3) Add host alias and IP to **hosts**
-
-```
-app ansible_ssh_host=198.74.61.95
-```
-
-4) `ansible-playbook 2016.yml -l [HOST-ALIAS]`
+If you need to figure out a specific process (e.g. backups, creating a new host, credentials etc.) or want to understand **the why**, look in [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/1650121). The tracker also serves the role of a [wiki](https://www.pivotaltracker.com/n/projects/1650121/search?q=label%3A%22wiki%22).
 
 ## Helps
 
@@ -55,14 +31,4 @@ ssh-keygen -t rsa -b 4096
 # backup private key & passphrase in Lastpass or iCloud Keychain
 ```
 
-When choosing an SSH key name, I prefer **HOSTNAME_YYYYMMDD**, e.g. `eve_20160716`. The date part will capture when the key was generated and will serve as a reminder for when the time comes to rotate it (preferably every 6 months).
-
-## Links
-
-[2016 Changelog](https://2016.changelog.com)
-
-[Pivotal Tracker](https://www.pivotaltracker.com/n/projects/1650121)
-
-[CI](https://ci.changelog.com)
-
-[Github](https://github.com/thechangelog/infrastructure)
+When choosing an SSH key name, capture the host and date: e.g. `eve_20160716`. Whenever you see the SSH key filename, ask yourself: _has it been more than 6 months since it was created_? If the answer is yes, rotate it.
