@@ -15,6 +15,9 @@ changelog_https_cert: "{{ lookup('env', 'HTTPS_CERT') }}"
 changelog_https_key: "{{ lookup('env', 'HTTPS_KEY') }}"
 changelog_https_chain: "{{ lookup('env', 'HTTPS_CHAIN') }}"
 
+dnsimple_email: "{{ lookup('env', 'DNSIMPLE_EMAIL') }}"
+dnsimple_api_token: "{{ lookup('env', 'DNSIMPLE_API_TOKEN') }}"
+
 dotcom_backup_aws_region: "{{ lookup('env', 'DOTCOM_BACKUP_AWS_REGION') }}"
 dotcom_backup_s3_bucket: "{{ lookup('env', 'DOTCOM_BACKUP_S3_BUCKET') }}"
 dotcom_backup_aws_access_key_id: "{{ lookup('env', 'DOTCOM_BACKUP_AWS_ACCESS_KEY_ID') }}"

@@ -3,6 +3,9 @@ dotcom_app_image: gerhard/elixir:1.3.2-erl18.3.4.1-hex-ffmpeg-mp3
 dotcom_assets_image: node:6.3.0
 dotcom_force_deploy: false
 
+dotcom_backup: false
+dotcom_backup_to_restore: false
+
 dotcom_backup_image: gerhard/gof3r:0.5.0
 # dotcom_backup_aws_region: required, ensure it is defined securely
 # dotcom_backup_s3_bucket: required, ensure it is defined securely
