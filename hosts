@@ -4,7 +4,6 @@ ci
 
 [app]
 nj24gb ansible_host=198.74.61.95 ansible_user=root
-nj8gb ansible_host=45.79.187.28 ansible_user=root
 
 [ci]
 nj4gb ansible_host=45.56.99.251 ansible_user=root
