@@ -6,7 +6,7 @@ ci
 nj24gb ansible_host=198.74.61.95 ansible_user=root
 
 [ci]
-nj4gb ansible_host=45.56.99.251 ansible_user=root
+nj4gb ansible_host=45.79.152.12 ansible_user=root
 
 [localhost]
 localhost ansible_connection=local
