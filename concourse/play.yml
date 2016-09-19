@@ -1,6 +1,10 @@
 platform: linux
 
-image: docker:///ansible/ansible#ubuntu1604
+image_resource:
+  type: docker-image
+  source:
+    repository: ansible/ansible
+    tag: ubuntu1604
 
 inputs:
   - name: infrastructure
