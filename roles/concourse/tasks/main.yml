@@ -44,7 +44,7 @@
   docker:
     name: concourse-worker
     image: "concourse/concourse:{{ concourse_version }}"
-    command: worker
+    command: worker --garden-dns-server 8.8.8.8
     privileged: true
     pull: missing
     state: reloaded
