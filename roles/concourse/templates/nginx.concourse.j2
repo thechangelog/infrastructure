@@ -27,6 +27,9 @@ server {
     proxy_cache off;
     proxy_read_timeout 5m;
     proxy_send_timeout 5m;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
   }
 
   include /etc/nginx/conf.d/disable_favicon_logging.server;
