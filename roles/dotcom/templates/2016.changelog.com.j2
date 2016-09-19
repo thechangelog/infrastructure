@@ -1196,3 +1196,15 @@ server {
   server_name changelog.fm;
   return 301 https://{{ fqdn }}/podcast$request_uri;
 }
+
+server {
+  listen 80;
+  server_name gotime.fm;
+  return 301 https://{{ fqdn }}/gotime$request_uri;
+}
+
+server {
+  listen 80;
+  server_name rfc.fm;
+  return 301 https://{{ fqdn }}/rfc$request_uri;
+}
