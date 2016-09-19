@@ -21,9 +21,9 @@ set_base_path() {
 configure_ssh() {
   mkdir -p ~/.ssh
   chmod 700 ~/.ssh
-  echo "${KNOWN_HOSTS:?must be defined}" > ~/.ssh/known_hosts
-  echo "${PRIVATE_KEY:?must be defined}" > ~/.ssh/id_rsa
-  chmod 600 -fR ~/.ssh/*
+  echo "${SSH_KNOWN_HOSTS:?must be defined}" > ~/.ssh/known_hosts
+  echo "${CONCOURSE_SSH_PRIVATE_KEY:?must be defined}" > ~/.ssh/id_rsa
+  chmod 600 ~/.ssh/id_rsa
 }
 
 play() {
