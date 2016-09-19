@@ -1,0 +1,31 @@
+resources:
+  - name: infrastructure
+    type: git
+    source:
+      uri: git@github.com:thechangelog/infrastructure.git
+      branch: master
+      private_key: {{concourse_ssh_private_key}}
+
+  - name: daily
+    type: time
+    source:
+      interval: 24h
+
+jobs:
+  - name: backup
+    serial_groups:
+      - backup
+    plan:
+      - get: infrastructure
+      - get: daily
+        trigger: true
+      - task: dotcom
+        file: infrastructure/concourse/play.yml
+        params:
+          ANSIBLE_PLAYBOOK: 2016.yml -t dotcom_backup -e dotcom_backup=true
+          CONCOURSE_SSH_PRIVATE_KEY: {{concourse_ssh_private_key}}
+          SSH_KNOWN_HOSTS: {{ssh_known_hosts}}
+          DOTCOM_BACKUP_AWS_REGION: {{dotcom_backup_aws_region}}
+          DOTCOM_BACKUP_S3_BUCKET: {{dotcom_backup_s3_bucket}}
+          DOTCOM_BACKUP_AWS_ACCESS_KEY_ID: {{dotcom_backup_aws_access_key_id}}
+          DOTCOM_BACKUP_AWS_SECRET_ACCESS_KEY: {{dotcom_backup_aws_secret_access_key}}

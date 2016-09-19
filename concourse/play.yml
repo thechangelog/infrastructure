@@ -1,0 +1,9 @@
+platform: linux
+
+image: docker:///ansible/ansible#ubuntu1604
+
+inputs:
+  - name: infrastructure
+
+run:
+  path: infrastructure/concourse/play

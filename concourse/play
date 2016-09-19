@@ -1,0 +1,36 @@
+#!/bin/sh -e
+
+main() {
+  set_base_path
+  configure_ssh
+  play
+}
+
+set_base_path() {
+  SOURCE="$0"
+  DIR="$(dirname "$SOURCE")"
+  while [ -h "$SOURCE" ]
+  do
+    SOURCE="$(readlink "$SOURCE")"
+    [ "$SOURCE" != /* ] && SOURCE="${DIR}/$SOURCE"
+    DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+  done
+  BASE_PATH="$(cd "${DIR}/.." && pwd)"
+}
+
+configure_ssh() {
+  mkdir -p ~/.ssh
+  chmod 700 ~/.ssh
+  echo "${KNOWN_HOSTS:?must be defined}" > ~/.ssh/known_hosts
+  echo "${PRIVATE_KEY:?must be defined}" > ~/.ssh/id_rsa
+  chmod 600 -fR ~/.ssh/*
+}
+
+play() {
+  (
+    cd "$BASE_PATH"
+    sh -c "ansible-playbook ${ANSIBLE_PLAYBOOK:?must be defined}"
+  )
+}
+
+main
