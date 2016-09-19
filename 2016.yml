@@ -62,6 +62,36 @@
       - "'Location: https://{{ fqdn }}/posts/reducing-server-anxiety' in http_response.stderr"
 
   - role: check
+    tags: [check, legacy, podcasts]
+    https: true
+    https_common_name: "*.changelog.com"
+    path: "/201"
+    http_checks:
+      - "'Host: {{ fqdn }}' in http_response.stderr"
+      - "'HTTP/1.1 301 Moved Permanently' in http_response.stderr"
+      - "'Location: https://{{ fqdn }}/podcast/201' in http_response.stderr"
+
+  - role: check
+    tags: [check, legacy, podcasts]
+    https: true
+    https_common_name: "*.changelog.com"
+    path: "/gotime-14"
+    http_checks:
+      - "'Host: {{ fqdn }}' in http_response.stderr"
+      - "'HTTP/1.1 301 Moved Permanently' in http_response.stderr"
+      - "'Location: https://{{ fqdn }}/gotime/14' in http_response.stderr"
+
+  - role: check
+    tags: [check, legacy, podcasts]
+    https: true
+    https_common_name: "*.changelog.com"
+    path: "/rfc-7"
+    http_checks:
+      - "'Host: {{ fqdn }}' in http_response.stderr"
+      - "'HTTP/1.1 301 Moved Permanently' in http_response.stderr"
+      - "'Location: https://{{ fqdn }}/rfc/7' in http_response.stderr"
+
+  - role: check
     tags: [check, static]
     https: true
     https_common_name: "*.changelog.com"

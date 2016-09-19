@@ -42,6 +42,10 @@ server {
     root /var/www/legacy;
   }
 
+  location ~ ^/([0-9]+) { return 301 https://$server_name/podcast/$1; }
+  location ~ ^/gotime-([0-9]+) { return 301 https://$server_name/gotime/$1; }
+  location ~ ^/rfc-([0-9]+) { return 301 https://$server_name/rfc/$1; }
+
   location /qt-4-6-the-trailer { return 301 https://$server_name/posts$request_uri; }
   location /opera-10-10-unite-turbo-awesome { return 301 https://$server_name/posts$request_uri; }
   location /google-chrome-os-chromium-os { return 301 https://$server_name/posts$request_uri; }
