@@ -1,8 +1,13 @@
 #!/bin/sh -e
 
+SSH_KEY_FILE=~/.ssh/id_rsa
+
 main() {
   set_base_path
-  configure_ssh
+  setup_ssh
+  configure_ssh_client
+  configure_ssh_key
+  ensure_ssh_key_in_agent
   play
 }
 
@@ -18,12 +23,41 @@ set_base_path() {
   BASE_PATH="$(cd "${DIR}/.." && pwd)"
 }
 
-configure_ssh() {
+setup_ssh() {
   mkdir -p ~/.ssh
   chmod 700 ~/.ssh
+
   echo "${SSH_KNOWN_HOSTS:?must be defined}" > ~/.ssh/known_hosts
-  echo "${CONCOURSE_SSH_PRIVATE_KEY:?must be defined}" > ~/.ssh/id_rsa
-  chmod 600 ~/.ssh/id_rsa
+}
+
+configure_ssh_client() {
+  cat > ~/.ssh/config <<EOF
+# Prevent SSH connections timing out (poll the server every 60")
+ServerAliveInterval 60
+ServerAliveCountMax 3
+# Forward local keys remotely
+ForwardAgent yes
+EOF
+}
+
+configure_ssh_key() {
+
+  echo "${CONCOURSE_SSH_PRIVATE_KEY:?must be defined}" > $SSH_KEY_FILE
+  chmod 600 $SSH_KEY_FILE
+
+  eval "$(ssh-agent)"
+  # shellcheck disable=SC2064
+  trap "kill $SSH_AGENT_PID" 0
+
+  ssh-add $SSH_KEY_FILE
+}
+
+ensure_ssh_key_in_agent() {
+  if ssh-add -l | grep -v "$SSH_KEY_FILE"
+  then
+    echo "$SSH_KEY_FILE not in SSH AGENT"
+    return 1
+  fi
 }
 
 play() {
