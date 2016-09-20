@@ -118,8 +118,8 @@
     path: "/10"
     http_checks:
       - "'Host: gotime.fm' in http_response.stderr"
-      - "'HTTP/1.1 301 Moved Permanently' in http_response.stderr"
-      - "'Location: https://2016.changelog.com/gotime/10' in http_response.stderr"
+      - "'HTTP/1.1 303 See Other' in http_response.stderr"
+      - "'Location: https://changelog.com/10' in http_response.stderr"
 
   - role: check
     tags: [check, rfcfm]
@@ -127,8 +127,8 @@
     path: "/4"
     http_checks:
       - "'Host: rfc.fm' in http_response.stderr"
-      - "'HTTP/1.1 301 Moved Permanently' in http_response.stderr"
-      - "'Location: https://2016.changelog.com/rfc/4' in http_response.stderr"
+      - "'HTTP/1.1 303 See Other' in http_response.stderr"
+      - "'Location: https://changelog.com/4' in http_response.stderr"
 
 - name: concourse
   hosts: ci
