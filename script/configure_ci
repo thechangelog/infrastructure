@@ -29,6 +29,7 @@ configure_pipeline() {
     --var dotcom_backup_aws_access_key_id="$DOTCOM_BACKUP_AWS_ACCESS_KEY_ID" \
     --var dotcom_backup_aws_secret_access_key="$DOTCOM_BACKUP_AWS_SECRET_ACCESS_KEY" \
     --var postgres_admin_pass="$PG_DOTCOM_PASS" \
+    --var campaign_monitor_token="$CM_TOKEN" \
     --config "concourse/${concourse_pipeline}.yml" --pipeline "$concourse_pipeline"
 }
 
