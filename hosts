@@ -3,10 +3,10 @@ app
 ci
 
 [app]
-nj24gb ansible_host=198.74.61.95 ansible_user=root
+c16-app ansible_host=198.74.61.95 ansible_user=root
 
 [ci]
-nj4gb ansible_host=45.79.152.12 ansible_user=root
+c16-ci ansible_host=45.79.152.12 ansible_user=root
 
 [localhost]
 localhost ansible_connection=local
