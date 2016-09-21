@@ -23,12 +23,20 @@ configure_pipeline() {
   # Some vars defined by .envrc
   fly --target "$concourse_target" set-pipeline \
     --var concourse_ssh_private_key="$CONCOURSE_SSH_PRIVATE_KEY" \
+    --var concourse_auth_pass="$CONCOURSE_AUTH_PASS" \
     --var ssh_known_hosts="$SSH_KNOWN_HOSTS" \
+    --var authorized_keys="$AUTHORIZED_KEYS" \
+    --var changelog_https_cert="$HTTPS_CERT" \
+    --var changelog_https_key="$HTTPS_KEY" \
+    --var changelog_https_chain="$HTTPS_CHAIN" \
+    --var dnsimple_email="$DNSIMPLE_EMAIL" \
+    --var dnsimple_api_token="$DNSIMPLE_API_TOKEN" \
     --var dotcom_backup_aws_region="$DOTCOM_BACKUP_AWS_REGION" \
     --var dotcom_backup_s3_bucket="$DOTCOM_BACKUP_S3_BUCKET" \
     --var dotcom_backup_aws_access_key_id="$DOTCOM_BACKUP_AWS_ACCESS_KEY_ID" \
     --var dotcom_backup_aws_secret_access_key="$DOTCOM_BACKUP_AWS_SECRET_ACCESS_KEY" \
     --var postgres_admin_pass="$PG_DOTCOM_PASS" \
+    --var postgres_concourse_pass="$PG_CONCOURSE_PASS" \
     --var campaign_monitor_token="$CM_TOKEN" \
     --config "concourse/${concourse_pipeline}.yml" --pipeline "$concourse_pipeline"
 }
