@@ -49,14 +49,7 @@ jobs:
           CONCOURSE_SSH_PRIVATE_KEY: {{concourse_ssh_private_key}}
           CONCOURSE_AUTH_PASS: {{concourse_auth_pass}}
           SSH_KNOWN_HOSTS: {{ssh_known_hosts}}
-          PG_DOTCOM_PASS: {{postgres_admin_pass}}
-      - task: dotcom
-        file: infrastructure/concourse/play.yml
-        params:
-          ANSIBLE_PLAYBOOK: dotcom.yml
-          CONCOURSE_SSH_PRIVATE_KEY: {{concourse_ssh_private_key}}
-          SSH_KNOWN_HOSTS: {{ssh_known_hosts}}
-          PG_DOTCOM_PASS: {{postgres_admin_pass}}
+          PG_CONCOURSE_PASS: {{postgres_concourse_pass}}
 
   - name: backup
     serial_groups:
