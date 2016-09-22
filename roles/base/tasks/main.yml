@@ -51,6 +51,15 @@
   lineinfile: "dest=/etc/sudoers regexp='^%sudo' line='%sudo ALL=(ALL) NOPASSWD:ALL'
               validate='visudo -cf %s'"
 
+- name: disallow SSH password login
+  notify: restart ssh
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: 'PasswordAuthentication yes'
+    line: 'PasswordAuthentication no'
+    backrefs: yes
+    state: present
+
 - name: sudoers have their ssh agent forwarded
   copy: src=sudo_forward_ssh_agent dest=/etc/sudoers.d/sudo_forward_ssh_agent
         mode=0440 owner=root group=root
