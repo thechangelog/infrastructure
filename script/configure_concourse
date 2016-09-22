@@ -16,11 +16,12 @@ main() {
 
 login() {
   fly --target "$concourse_target" login \
+    --username admin --password "$CONCOURSE_AUTH_PASS" \
     --concourse-url "$concourse_url"
 }
 
 configure_pipeline() {
-  # Some vars defined by .envrc
+  # All secrets defined in .envrc
   fly --target "$concourse_target" set-pipeline \
     --var concourse_ssh_private_key="$CONCOURSE_SSH_PRIVATE_KEY" \
     --var concourse_auth_pass="$CONCOURSE_AUTH_PASS" \
