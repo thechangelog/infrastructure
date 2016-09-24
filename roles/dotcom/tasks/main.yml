@@ -113,7 +113,8 @@
     --env MIX_ENV=prod
     --env PORT=4000
     --env DB_URL=ecto://{{ postgres_admin_user }}:{{ postgres_admin_pass }}@postgres.{{ postgres_net }}/changelog
-    --env CM_TOKEN={{ campaign_monitor_token }}
+    --env CM_SMTP_TOKEN={{ campaign_monitor_smtp_token }}
+    --env CM_API_TOKEN={{ campaign_monitor_api_token }}
     {{ dotcom_app_image }}
     ./script/run
 

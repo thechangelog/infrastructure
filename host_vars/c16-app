@@ -9,4 +9,5 @@ postgres_admin_pass: "{{ lookup('env', 'PG_DOTCOM_PASS') }}"
 
 dotcom_app_repository: git@github.com:thechangelog/dotcom.git
 
-campaign_monitor_token: "{{ lookup('env', 'CM_TOKEN') }}"
+campaign_monitor_smtp_token: "{{ lookup('env', 'CM_SMTP_TOKEN') }}"
+campaign_monitor_api_token: "{{ lookup('env', 'CM_API_TOKEN') }}"

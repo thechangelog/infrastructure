@@ -91,4 +91,5 @@ jobs:
           DOTCOM_BACKUP_AWS_ACCESS_KEY_ID: {{dotcom_backup_aws_access_key_id}}
           DOTCOM_BACKUP_AWS_SECRET_ACCESS_KEY: {{dotcom_backup_aws_secret_access_key}}
           PG_DOTCOM_PASS: {{postgres_admin_pass}}
-          CM_TOKEN: {{campaign_monitor_token}}
+          CM_SMTP_TOKEN: {{campaign_monitor_smtp_token}}
+          CM_API_TOKEN: {{campaign_monitor_api_token}}
