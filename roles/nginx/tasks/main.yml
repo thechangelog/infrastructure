@@ -70,7 +70,6 @@
   docker:
     name: "nginx.{{ nginx_net }}"
     image: "nginx:{{ nginx_version }}"
-    pull: missing
     state: reloaded
     restart_policy: always
     net: "{{ nginx_net }}"
