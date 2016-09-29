@@ -1,5 +1,5 @@
 #!/bin/sh -e
-
+exit 1
 SSH_KEY_FILE=~/.ssh/id_rsa
 
 main() {
