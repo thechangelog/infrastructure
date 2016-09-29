@@ -1,3 +1,10 @@
+resource_types:
+  - name: slack-notification
+    type: docker-image
+    source:
+      repository: cfcommunity/slack-notification-resource
+      tag: latest
+
 resources:
   - name: infrastructure
     type: git
@@ -17,6 +24,11 @@ resources:
     type: time
     source:
       interval: 24h
+
+  - name: slack
+    type: slack-notification
+    source:
+      url: {{slack_webhook}}
 
 jobs:
   - name: configure
@@ -50,6 +62,12 @@ jobs:
           CONCOURSE_AUTH_PASS: {{concourse_auth_pass}}
           SSH_KNOWN_HOSTS: {{ssh_known_hosts}}
           PG_CONCOURSE_PASS: {{postgres_concourse_pass}}
+        on_failure:
+          put: slack
+          params:
+            text: <!here> hosts configuration failed https://ci.changelog.com/teams/main/pipelines/2016.changelog.com
+            icon_url: http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
+            username: concourse
 
   - name: backup
     serial_groups:

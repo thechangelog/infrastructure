@@ -40,6 +40,7 @@ configure_pipeline() {
     --var postgres_concourse_pass="$PG_CONCOURSE_PASS" \
     --var campaign_monitor_smtp_token="$CM_SMTP_TOKEN" \
     --var campaign_monitor_api_token="$CM_API_TOKEN" \
+    --var slack_webhook="$SLACK_NOTIFICATION_WEBHOOK" \
     --config "concourse/${concourse_pipeline}.yml" --pipeline "$concourse_pipeline"
 }
 
