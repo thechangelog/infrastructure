@@ -93,22 +93,35 @@ jobs:
     serial_groups:
       - backup
     plan:
-      - aggregate:
-        - get: infrastructure
-        - get: dotcom
-          trigger: true
-        - get: daily
-          trigger: true
-      - task: deploy dotcom
-        file: infrastructure/concourse/play.yml
-        params:
-          ANSIBLE_PLAYBOOK: dotcom.yml
-          CONCOURSE_SSH_PRIVATE_KEY: {{concourse_ssh_private_key}}
-          SSH_KNOWN_HOSTS: {{ssh_known_hosts}}
-          DOTCOM_BACKUP_AWS_REGION: {{dotcom_backup_aws_region}}
-          DOTCOM_BACKUP_S3_BUCKET: {{dotcom_backup_s3_bucket}}
-          DOTCOM_BACKUP_AWS_ACCESS_KEY_ID: {{dotcom_backup_aws_access_key_id}}
-          DOTCOM_BACKUP_AWS_SECRET_ACCESS_KEY: {{dotcom_backup_aws_secret_access_key}}
-          PG_DOTCOM_PASS: {{postgres_admin_pass}}
-          CM_SMTP_TOKEN: {{campaign_monitor_smtp_token}}
-          CM_API_TOKEN: {{campaign_monitor_api_token}}
+      - do:
+        - aggregate:
+          - get: infrastructure
+          - get: dotcom
+            trigger: true
+          - get: daily
+            trigger: true
+        - task: deploy dotcom
+          file: infrastructure/concourse/play.yml
+          params:
+            ANSIBLE_PLAYBOOK: dotcom.yml
+            CONCOURSE_SSH_PRIVATE_KEY: {{concourse_ssh_private_key}}
+            SSH_KNOWN_HOSTS: {{ssh_known_hosts}}
+            DOTCOM_BACKUP_AWS_REGION: {{dotcom_backup_aws_region}}
+            DOTCOM_BACKUP_S3_BUCKET: {{dotcom_backup_s3_bucket}}
+            DOTCOM_BACKUP_AWS_ACCESS_KEY_ID: {{dotcom_backup_aws_access_key_id}}
+            DOTCOM_BACKUP_AWS_SECRET_ACCESS_KEY: {{dotcom_backup_aws_secret_access_key}}
+            PG_DOTCOM_PASS: {{postgres_admin_pass}}
+            CM_SMTP_TOKEN: {{campaign_monitor_smtp_token}}
+            CM_API_TOKEN: {{campaign_monitor_api_token}}
+        on_success:
+            put: slack
+            params:
+              text: "production deploy success! :rocket:"
+              icon_url: http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
+              username: concourse
+        on_failure:
+            put: slack
+            params:
+              text: "production deploy failed :scream: https://ci.changelog.com/teams/main/pipelines/2016.changelog.com"
+              icon_url: http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
+              username: concourse
