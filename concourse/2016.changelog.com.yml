@@ -35,33 +35,34 @@ jobs:
     serial_groups:
       - backup
     plan:
-      - aggregate:
-        - get: infrastructure
-          trigger: true
-        - get: daily
-          trigger: true
-      - task: default
-        file: infrastructure/concourse/play.yml
-        params:
-          ANSIBLE_PLAYBOOK: default.yml
-          CONCOURSE_SSH_PRIVATE_KEY: {{concourse_ssh_private_key}}
-          SSH_KNOWN_HOSTS: {{ssh_known_hosts}}
-          AUTHORIZED_KEYS: {{authorized_keys}}
-          HTTPS_CERT: {{changelog_https_cert}}
-          HTTPS_KEY: {{changelog_https_key}}
-          HTTPS_CHAIN: {{changelog_https_chain}}
-          DNSIMPLE_EMAIL: {{dnsimple_email}}
-          DNSIMPLE_API_TOKEN: {{dnsimple_api_token}}
-          PG_DOTCOM_PASS: {{postgres_admin_pass}}
-          PG_CONCOURSE_PASS: {{postgres_concourse_pass}}
-      - task: concourse
-        file: infrastructure/concourse/play.yml
-        params:
-          ANSIBLE_PLAYBOOK: concourse.yml
-          CONCOURSE_SSH_PRIVATE_KEY: {{concourse_ssh_private_key}}
-          CONCOURSE_AUTH_PASS: {{concourse_auth_pass}}
-          SSH_KNOWN_HOSTS: {{ssh_known_hosts}}
-          PG_CONCOURSE_PASS: {{postgres_concourse_pass}}
+      - do:
+        - aggregate:
+          - get: infrastructure
+            trigger: true
+          - get: daily
+            trigger: true
+        - task: default
+          file: infrastructure/concourse/play.yml
+          params:
+            ANSIBLE_PLAYBOOK: default.yml
+            CONCOURSE_SSH_PRIVATE_KEY: {{concourse_ssh_private_key}}
+            SSH_KNOWN_HOSTS: {{ssh_known_hosts}}
+            AUTHORIZED_KEYS: {{authorized_keys}}
+            HTTPS_CERT: {{changelog_https_cert}}
+            HTTPS_KEY: {{changelog_https_key}}
+            HTTPS_CHAIN: {{changelog_https_chain}}
+            DNSIMPLE_EMAIL: {{dnsimple_email}}
+            DNSIMPLE_API_TOKEN: {{dnsimple_api_token}}
+            PG_DOTCOM_PASS: {{postgres_admin_pass}}
+            PG_CONCOURSE_PASS: {{postgres_concourse_pass}}
+        - task: concourse
+          file: infrastructure/concourse/play.yml
+          params:
+            ANSIBLE_PLAYBOOK: concourse.yml
+            CONCOURSE_SSH_PRIVATE_KEY: {{concourse_ssh_private_key}}
+            CONCOURSE_AUTH_PASS: {{concourse_auth_pass}}
+            SSH_KNOWN_HOSTS: {{ssh_known_hosts}}
+            PG_CONCOURSE_PASS: {{postgres_concourse_pass}}
         on_failure:
           put: slack
           params:
