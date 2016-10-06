@@ -40,6 +40,8 @@ server {
 
   location ^~ /wp-content {
     root /var/www/legacy;
+    add_header Cache-Control 'public';
+    expires max;
   }
 
   location ~ ^/([0-9]+) { return 301 https://$server_name/podcast/$1; }
