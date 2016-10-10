@@ -51,9 +51,9 @@ server {
   location ~ ^/gotime-([0-9]+) { return 301 https://$server_name/gotime/$1; }
   location ~ ^/rfc-([0-9]+) { return 301 https://$server_name/rfc/$1; }
 
-  location /team { return 301 https://$server_name/about$request_uri; }
-  location /changeloggers { return 301 https://$server_name/about$request_uri; }
-  location /membership { return 301 https://$server_name/community$request_uri; }
+  location /team { return 301 https://$server_name/about; }
+  location /changeloggers { return 301 https://$server_name/about; }
+  location /membership { return 301 https://$server_name/community; }
 
   location /qt-4-6-the-trailer { return 301 https://$server_name/posts$request_uri; }
   location /opera-10-10-unite-turbo-awesome { return 301 https://$server_name/posts$request_uri; }
