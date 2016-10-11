@@ -2,7 +2,7 @@
 
 docker_data_size: 20G
 docker_volumes_size: 300G
-fqdn: 2016.changelog.com
+fqdn: changelog.com
 
 postgres_admin_user: postgres
 postgres_admin_pass: "{{ lookup('env', 'PG_DOTCOM_PASS') }}"

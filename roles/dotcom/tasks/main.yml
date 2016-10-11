@@ -120,7 +120,7 @@
 
 - name: configure nginx site
   template:
-    src: 2016.changelog.com.j2
+    src: changelog.com.j2
     dest: "{{ nginx_config_dir }}/sites/{{ fqdn }}.site"
 
 - name: reload nginx so that it resolves the new app host

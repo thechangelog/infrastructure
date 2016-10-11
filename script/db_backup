@@ -5,8 +5,8 @@
 read -rp "DB to backup (defaults to changelog): " pg_db
 pg_db="${pg_db:-changelog}"
 
-read -rp "PostgreSQL host (defaults to 2016.changelog.com): " ssh_host
-ssh_host="${ssh_host:-2016.changelog.com}"
+read -rp "PostgreSQL host (defaults to changelog.com): " ssh_host
+ssh_host="${ssh_host:-changelog.com}"
 ssh_user="root"
 ssh_socket="$ssh_host.sock"
 

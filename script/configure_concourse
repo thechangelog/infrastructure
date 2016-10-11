@@ -2,7 +2,7 @@
 
 [ -z "$DEBUG" ] || set -x
 
-concourse_pipeline="${1:-2016.changelog.com}"
+concourse_pipeline="${1:-changelog.com}"
 concourse_url="https://ci.changelog.com"
 concourse_target="changelog"
 
