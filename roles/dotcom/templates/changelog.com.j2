@@ -7,16 +7,6 @@ server {
 }
 
 server {
-  listen 80;
-  listen 443 ssl;
-  server_name www.{{ fqdn }};
-  ssl_certificate /etc/nginx/ssl/star.changelog.com.crt;
-  ssl_certificate_key /etc/nginx/ssl/star.changelog.com.key;
-  ssl_trusted_certificate /etc/nginx/ssl/star.changelog.com.fullchain.pem;
-  return 301 https://{{ fqdn }}$request_ur;
-}
-
-server {
   listen 443 ssl;
   server_name {{ fqdn }};
 
