@@ -85,7 +85,7 @@
     http_checks:
       - "'Host: changelog.fm' in http_response.stderr"
       - "'HTTP/1.1 301 Moved Permanently' in http_response.stderr"
-      - "'Location: https://{{ fqdn }}/podcast/1' in http_response.stderr"
+      - "'Location: https://changelog.com/podcast/1' in http_response.stderr"
 
   - role: check
     tags: [check, gotimefm]
