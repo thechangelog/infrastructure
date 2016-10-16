@@ -24,6 +24,9 @@ server {
   ssl_certificate_key /etc/nginx/ssl/star.changelog.com.key;
   ssl_trusted_certificate /etc/nginx/ssl/star.changelog.com.fullchain.pem;
 
+  # Disable response buffering to temporary files
+  proxy_max_temp_file_size 0;
+
   client_max_body_size {{ dotcom_max_upload_size_mb }}M;
 
   root /var/www/dotcom/_build/prod/lib/changelog/priv/static;
