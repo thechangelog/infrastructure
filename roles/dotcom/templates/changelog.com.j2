@@ -54,6 +54,7 @@ server {
   location /team { return 301 https://$server_name/about; }
   location /changeloggers { return 301 https://$server_name/about; }
   location /membership { return 301 https://$server_name/community; }
+  location /store { return 301 https://$server_name/community; }
 
   location /qt-4-6-the-trailer { return 301 https://$server_name/posts$request_uri; }
   location /opera-10-10-unite-turbo-awesome { return 301 https://$server_name/posts$request_uri; }
