@@ -16,7 +16,7 @@ resources:
   - name: dotcom
     type: git
     source:
-      uri: git@github.com:thechangelog/dotcom.git
+      uri: git@github.com:thechangelog/changelog.com.git
       branch: master
       private_key: {{concourse_ssh_private_key}}
 
