@@ -1213,7 +1213,8 @@ server {
 server {
   listen 80;
   server_name gotime.fm;
-  return 301 https://{{ fqdn }}/gotime$request_uri;
+  location /live { return 301 https://{{ fqdn }}$request_uri; }
+  location / { return 301 https://{{ fqdn }}/gotime$request_uri; }
 }
 
 server {
