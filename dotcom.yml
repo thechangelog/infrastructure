@@ -102,5 +102,5 @@
     path: "/4"
     http_checks:
       - "'Host: rfc.fm' in http_response.stderr"
-      - "'HTTP/1.1 303 See Other' in http_response.stderr"
-      - "'Location: https://changelog.com/4' in http_response.stderr"
+      - "'HTTP/1.1 301 Moved Permanently' in http_response.stderr"
+      - "'Location: https://changelog.com/rfc/4' in http_response.stderr"
