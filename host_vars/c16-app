@@ -11,3 +11,6 @@ dotcom_app_repository: git@github.com:thechangelog/changelog.com.git
 
 campaign_monitor_smtp_token: "{{ lookup('env', 'CM_SMTP_TOKEN') }}"
 campaign_monitor_api_token: "{{ lookup('env', 'CM_API_TOKEN') }}"
+
+secret_key_base: "{{ lookup('env', 'SECRET_KEY_BASE') }}"
+signing_salt: "{{ lookup('env', 'SIGNING_SALT') }}"
