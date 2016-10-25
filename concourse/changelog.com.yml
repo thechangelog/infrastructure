@@ -113,6 +113,8 @@ jobs:
             PG_DOTCOM_PASS: {{postgres_admin_pass}}
             CM_SMTP_TOKEN: {{campaign_monitor_smtp_token}}
             CM_API_TOKEN: {{campaign_monitor_api_token}}
+            SECRET_KEY_BASE: {{secret_key_base}}
+            SIGNING_KEY: {{signing_key}}
         on_success:
             put: slack
             params:
