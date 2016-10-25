@@ -114,7 +114,7 @@ jobs:
             CM_SMTP_TOKEN: {{campaign_monitor_smtp_token}}
             CM_API_TOKEN: {{campaign_monitor_api_token}}
             SECRET_KEY_BASE: {{secret_key_base}}
-            SIGNING_KEY: {{signing_key}}
+            SIGNING_SALT: {{signing_salt}}
         on_success:
             put: slack
             params:
