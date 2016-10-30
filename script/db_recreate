@@ -12,8 +12,8 @@ fi
 read -rp "DB to re-create (defaults to changelog): " pg_db
 pg_db="${pg_db:-changelog}"
 
-read -rp "PostgreSQL host (defaults to changelog.com): " ssh_host
-ssh_host="${ssh_host:-changelog.com}"
+read -rp "PostgreSQL host: " ssh_host
+ssh_host="${ssh_host:?PostgreSQL host must be provided}"
 ssh_user="root"
 ssh_socket="$ssh_host.sock"
 
