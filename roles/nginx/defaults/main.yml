@@ -1,4 +1,4 @@
-nginx_version: 1.11.1
+nginx_version: 1.11.5
 
 nginx_config_dir: /data/nginx
 
