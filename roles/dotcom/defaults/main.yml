@@ -1,6 +1,6 @@
 dotcom_max_upload_size_mb: 150
 dotcom_app_image: gerhard/elixir:1.3.2-erl18.3.4.1-hex-ffmpeg-mp3
-dotcom_assets_image: node:6.3.0
+dotcom_assets_image: node:6.9.1
 dotcom_force_deploy: false
 
 dotcom_backup: false
