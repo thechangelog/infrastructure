@@ -96,6 +96,7 @@ jobs:
       - do:
         - aggregate:
           - get: infrastructure
+            trigger: true
           - get: dotcom
             trigger: true
           - get: daily
