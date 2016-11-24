@@ -7,6 +7,7 @@ concourse_url="https://ci.changelog.com"
 concourse_target="changelog"
 
 main() {
+  load_secrets_from_lastpass
   configure_pipeline ||
   (
     login
@@ -18,6 +19,10 @@ login() {
   fly --target "$concourse_target" login \
     --username admin --password "$CONCOURSE_AUTH_PASS" \
     --concourse-url "$concourse_url"
+}
+
+load_secrets_from_lastpass() {
+  direnv allow
 }
 
 configure_pipeline() {
