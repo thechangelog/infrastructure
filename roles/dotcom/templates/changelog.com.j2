@@ -61,6 +61,8 @@ server {
   location /membership { return 301 https://$server_name/community; }
   location /store { return 301 https://$server_name/community; }
 
+  location /post/980148470/episode-0-3-2-960-gs-with-nathan-smith { return 301 $https://$server_name/podcast/32; }
+
   location /qt-4-6-the-trailer { return 301 https://$server_name/posts$request_uri; }
   location /opera-10-10-unite-turbo-awesome { return 301 https://$server_name/posts$request_uri; }
   location /google-chrome-os-chromium-os { return 301 https://$server_name/posts$request_uri; }
