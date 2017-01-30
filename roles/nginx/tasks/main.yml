@@ -107,7 +107,7 @@
 - name: check nginx_status
   assert:
     that:
-      - "'Host: localhost' in nginx_status.stderr"
+      - "'Host: 127.0.0.1' in nginx_status.stderr"
       - "'HTTP/1.1 200 OK' in nginx_status.stderr"
       - "'Server: nginx' in nginx_status.stderr"
       - "'Active connections:' in nginx_status.stdout"
