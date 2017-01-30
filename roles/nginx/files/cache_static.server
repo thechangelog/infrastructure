@@ -1,3 +1,5 @@
+#/* vim: set ft=cfg : */
+
 location ~ .(?:css|gif|ico|jpe?g|js|png|svg|woff?2|ttf|eot)$ {
   add_header Cache-Control 'public';
   expires max;

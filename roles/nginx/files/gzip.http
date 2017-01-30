@@ -1,3 +1,5 @@
+#/* vim: set ft=cfg : */
+
 gzip on;
 gzip_disable msie6;
 gzip_min_length 10240;

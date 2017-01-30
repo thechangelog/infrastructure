@@ -1,3 +1,5 @@
+#/* vim: set ft=cfg : */
+
 fastcgi_cache_path /usr/share/nginx/cache levels=1:2 keys_zone=microcache:10m max_size=1024m inactive=1h;
 # Use 10MB of shared memory for storing active keys & data info. 1MB of shared memory can store ~8k keys.
 # If more than 1G of data is cached on disk, start removing the least recently used data to make room for newer data.

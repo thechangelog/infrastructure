@@ -1,3 +1,5 @@
+#/* vim: set ft=cfg : */
+
 location = /robots.txt {
   access_log off;
   log_not_found off;

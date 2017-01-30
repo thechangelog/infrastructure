@@ -1,3 +1,5 @@
+#/* vim: set ft=cfg : */
+
 log_format host_timed '$http_host "$request" $status '
     '"$http_referer" "$http_user_agent" '
     '$request_time $upstream_response_time $body_bytes_sent';
