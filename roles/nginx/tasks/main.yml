@@ -97,7 +97,7 @@
 - name: nginx_status http response
   register: nginx_status
   shell: >
-    curl --connect-timeout 3 -v http://localhost/nginx_status
+    curl --connect-timeout 3 -v http://127.0.0.1/nginx_status
 
 - name: debug nginx_status
   when: debug | default(false)
