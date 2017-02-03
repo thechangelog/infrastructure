@@ -30,6 +30,14 @@ resources:
     source:
       url: {{slack_webhook}}
 
+  - name: dotcom-assets-image
+    type: docker-image
+    source:
+      repository: thechangelog/assets
+      tag: node6.9.1-yarn0.19.1
+      username: {{dockerhub_user}}
+      password: {{dockerhub_pass}}
+
 jobs:
   - name: configure
     serial_groups:
@@ -135,3 +143,10 @@ jobs:
               text: "production deploy failed :scream: https://ci.changelog.com/teams/main/pipelines/changelog.com"
               icon_url: http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
               username: concourse
+
+  - name: build-assets-image
+    plan:
+      - get: infrastructure
+      - put: dotcom-assets-image
+        params:
+          build: infrastructure/roles/dotcom/files/docker/assets
