@@ -117,6 +117,11 @@
     --env CM_API_TOKEN={{ campaign_monitor_api_token }}
     --env AWS_ACCESS_KEY_ID={{ aws_access_key_id }}
     --env AWS_SECRET_ACCESS_KEY={{ aws_secret_access_key }}
+    --env GITHUB_CLIENT_ID={{ github_client_id }}
+    --env GITHUB_CLIENT_SECRET={{ github_client_secret }}
+    --env TWITTER_CONSUMER_KEY={{ twitter_consumer_key }}
+    --env TWITTER_CONSUMER_SECRET={{ twitter_consumer_secret }}
+    --env SLACK_API_TOKEN={{ slack_api_token }}
     --env SECRET_KEY_BASE={{ secret_key_base }}
     --env SIGNING_SALT={{ signing_salt }}
     {{ dotcom_app_image }}
