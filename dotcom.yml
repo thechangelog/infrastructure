@@ -105,11 +105,11 @@
       - "'HTTP/1.1 301 Moved Permanently' in http_response.stderr"
       - "'Location: https://changelog.com/rfc/4' in http_response.stderr"
 
-- role: check
-  tags: [check, jspartyfm]
-  fqdn: jsparty.fm
-  path: "/live"
-  http_checks:
-    - "'Host: jsparty.fm' in http_response.stderr"
-    - "'HTTP/1.1 301 Moved Permanently' in http_response.stderr"
-    - "'Location: https://changelog.com/live' in http_response.stderr"
+  - role: check
+    tags: [check, jspartyfm]
+    fqdn: jsparty.fm
+    path: "/live"
+    http_checks:
+      - "'Host: jsparty.fm' in http_response.stderr"
+      - "'HTTP/1.1 301 Moved Permanently' in http_response.stderr"
+      - "'Location: https://changelog.com/live' in http_response.stderr"
