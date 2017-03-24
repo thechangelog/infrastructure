@@ -38,6 +38,14 @@ resources:
       username: {{dockerhub_user}}
       password: {{dockerhub_pass}}
 
+  - name: dotcom-runtime-image
+    type: docker-image
+    source:
+      repository: thechangelog/runtime
+      tag: erl19.2.3-elixir1.4.2-ffmpeg
+      username: {{dockerhub_user}}
+      password: {{dockerhub_pass}}
+
 jobs:
   - name: configure
     serial_groups:
@@ -150,3 +158,10 @@ jobs:
       - put: dotcom-assets-image
         params:
           build: infrastructure/roles/dotcom/files/docker/assets
+
+  - name: build-runtime-image
+    plan:
+      - get: infrastructure
+      - put: dotcom-runtime-image
+        params:
+          build: infrastructure/roles/dotcom/files/docker/runtime
