@@ -27,7 +27,9 @@ main() {
 }
 
 install_dependencies() {
-  brew install postgresql 2>/dev/null
+  if ! [ -x "$(command -v pg_dump)" ]; then
+    brew install postgresql 2>/dev/null
+  fi
 }
 
 open_tunnel_to_remote_host() {
