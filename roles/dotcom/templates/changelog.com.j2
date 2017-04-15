@@ -61,8 +61,8 @@ server {
   location /sponsorship { return 301 https://$server_name/sponsor; }
   location /soundcheck { return 301 https://$server_name/guest; }
 
+  # Sponsor redirects
   location /datadog { return 301 https://www.datadoghq.com/lpgs/?utm_source=Advertisement&utm_medium=Advertisement&utm_campaign=ChangelogPodcast-Tshirt; }
-
   location /sentry { return 301 https://sentry.io/from/changelog/; }
 
   location /post/980148470/episode-0-3-2-960-gs-with-nathan-smith { return 301 $https://$server_name/podcast/32; }
@@ -1222,7 +1222,10 @@ server {
   listen 80;
   server_name gotime.fm;
   location /live { return 301 https://{{ fqdn }}$request_uri; }
+
+  # Sponsor redirects
   location /datadog { return 301 https://www.datadoghq.com/dg/apm/ts-go-tracing/?utm_source=Advertisement&utm_medium=Advertisement&utm_campaign=GotimePodcast-Tshirt; }
+
   location / { return 301 https://{{ fqdn }}/gotime$request_uri; }
 }
 
@@ -1230,6 +1233,10 @@ server {
   listen 80;
   server_name jsparty.fm;
   location /live { return 301 https://{{ fqdn }}$request_uri; }
+
+  # Sponsor redirects
+  location /sentry { return 301 https://sentry.io/from/jsparty/; }
+
   location / { return 301 https://{{ fqdn }}/jsparty$request_uri; }
 }
 
