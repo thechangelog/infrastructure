@@ -82,7 +82,7 @@ jobs:
         on_failure:
           put: slack
           params:
-            text: <!here> hosts configuration failed https://ci.changelog.com/teams/main/pipelines/changelog.com
+            text: hosts configuration failed https://ci.changelog.com/teams/main/pipelines/changelog.com
             icon_url: http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
             username: concourse
 
