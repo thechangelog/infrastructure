@@ -10,4 +10,4 @@
       tags: [check]
       https: true
       https_common_name: "*.changelog.com"
-      response_body: "changelog.com - Concourse"
+      response_body: "title>Concourse"
