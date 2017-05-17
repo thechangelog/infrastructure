@@ -121,7 +121,8 @@
     --env GITHUB_CLIENT_SECRET={{ github_client_secret }}
     --env TWITTER_CONSUMER_KEY={{ twitter_consumer_key }}
     --env TWITTER_CONSUMER_SECRET={{ twitter_consumer_secret }}
-    --env SLACK_API_TOKEN={{ slack_api_token }}
+    --env SLACK_INVITE_API_TOKEN={{ slack_invite_api_token }}
+    --env SLACK_APP_API_TOKEN={{ slack_app_api_token }}
     --env SECRET_KEY_BASE={{ secret_key_base }}
     --env SIGNING_SALT={{ signing_salt }}
     {{ dotcom_app_image }}

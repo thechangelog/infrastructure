@@ -53,7 +53,8 @@ configure_pipeline() {
     --var twitter_consumer_secret="$TWITTER_CONSUMER_SECRET" \
     --var secret_key_base="$SECRET_KEY_BASE" \
     --var signing_salt="$SIGNING_SALT" \
-    --var slack_api_token="$SLACK_API_TOKEN" \
+    --var slack_invite_api_token="$SLACK_INVITE_API_TOKEN" \
+    --var slack_app_api_token="$SLACK_APP_API_TOKEN" \
     --var slack_webhook="$SLACK_NOTIFICATION_WEBHOOK" \
     --var dockerhub_user="$DOCKERHUB_USER" \
     --var dockerhub_pass="$DOCKERHUB_PASS" \

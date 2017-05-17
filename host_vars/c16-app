@@ -18,7 +18,8 @@ github_client_secret: "{{ lookup('env', 'GITHUB_CLIENT_SECRET') }}"
 twitter_consumer_key: "{{ lookup('env', 'TWITTER_CONSUMER_KEY') }}"
 twitter_consumer_secret: "{{ lookup('env', 'TWITTER_CONSUMER_SECRET') }}"
 
-slack_api_token: "{{ lookup('env', 'SLACK_API_TOKEN') }}"
+slack_invite_api_token: "{{ lookup('env', 'SLACK_INVITE_API_TOKEN') }}"
+slack_app_api_token: "{{ lookup('env', 'SLACK_APP_API_TOKEN') }}"
 
 aws_access_key_id: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
 aws_secret_access_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"

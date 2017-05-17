@@ -140,7 +140,8 @@ jobs:
             TWITTER_CONSUMER_SECRET: {{twitter_consumer_secret}}
             AWS_ACCESS_KEY_ID: {{aws_access_key_id}}
             AWS_SECRET_ACCESS_KEY: {{aws_secret_access_key}}
-            SLACK_API_TOKEN: {{slack_api_token}}
+            SLACK_INVITE_API_TOKEN: {{slack_invite_api_token}}
+            SLACK_APP_API_TOKEN: {{slack_app_api_token}}
             SECRET_KEY_BASE: {{secret_key_base}}
             SIGNING_SALT: {{signing_salt}}
         on_success:
