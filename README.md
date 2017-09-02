@@ -1,10 +1,14 @@
-This repository contains everything that is required to provision and manage [The Changelog](https://changelog.com) infrastructure.
+This repository contains everything that is required to provision and manage [The Changelog](https://changelog.com) infrastructure:
 
-Most of it is Ansible playbooks and roles, but also Dockerfiles, Concourse pipeline configurations and scripts that hold everything together.
+* Ansible roles &amp; playbooks
+* Dockerfiles
+* Concourse pipeline configurations
+* Scripts that hold everything together
 
-When starting out, run `script/setup` first. This will install all required dependencies on OS X. After the initial run, you only need to run `setup` since `$PWD/script` will be added to `$PATH`.
+When starting out, run `script/setup` first. This will install all required dependencies on OS X.
+After the initial run, you only need to run `setup` since `$PWD/script` will be added to `$PATH` via [direnv](https://direnv.net/).
 
-The most important command is `ansible-playbook dotcom.yml`. This provisions and keeps all servers up-to-date.
+The most important command is `ansible-playbook default.yml`. This provisions and keeps all servers up-to-date.
 
 If you need to figure out a specific process (e.g. backups, creating a new host, credentials etc.) or want to understand **the why**, look in [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/1650121). The tracker doubles up as a [wiki](https://www.pivotaltracker.com/n/projects/1650121/search?q=label%3A%22wiki%22).
 
