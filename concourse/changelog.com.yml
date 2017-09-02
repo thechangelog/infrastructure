@@ -42,7 +42,7 @@ resources:
     type: docker-image
     source:
       repository: thechangelog/runtime
-      tag: erl19.2.3-elixir1.4.2-ffmpeg
+      tag: elixir1.5.1-ffmpeg
       username: {{dockerhub_user}}
       password: {{dockerhub_pass}}
 
