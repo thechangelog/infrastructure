@@ -1,4 +1,4 @@
-dotcom_max_upload_size_mb: 150
+dotcom_max_upload_size_mb: 200
 dotcom_app_image: thechangelog/runtime:elixir1.5.1-ffmpeg
 dotcom_assets_image: thechangelog/assets:node6.9.1-yarn0.19.1
 dotcom_force_deploy: false
