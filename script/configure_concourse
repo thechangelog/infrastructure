@@ -58,6 +58,7 @@ configure_pipeline() {
     --var slack_webhook="$SLACK_NOTIFICATION_WEBHOOK" \
     --var dockerhub_user="$DOCKERHUB_USER" \
     --var dockerhub_pass="$DOCKERHUB_PASS" \
+    --var rollbar_access_token="$ROLLBAR_ACCESS_TOKEN" \
     --config "concourse/${concourse_pipeline}.yml" --pipeline "$concourse_pipeline"
   # Make pipeline public for build badges
   fly --target "$concourse_target" expose-pipeline --pipeline "$concourse_pipeline"

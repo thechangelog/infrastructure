@@ -125,6 +125,7 @@
     --env SLACK_APP_API_TOKEN={{ slack_app_api_token }}
     --env SECRET_KEY_BASE={{ secret_key_base }}
     --env SIGNING_SALT={{ signing_salt }}
+    --env ROLLBAR_ACCESS_TOKEN={{ rollbar_access_token }}
     {{ dotcom_app_image }}
     ./script/run
 

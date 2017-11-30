@@ -26,3 +26,5 @@ aws_secret_access_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
 
 secret_key_base: "{{ lookup('env', 'SECRET_KEY_BASE') }}"
 signing_salt: "{{ lookup('env', 'SIGNING_SALT') }}"
+
+rollbar_access_token: "{{ lookup('env', 'ROLLBAR_ACCESS_TOKEN') }}"
