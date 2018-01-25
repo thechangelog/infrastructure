@@ -53,6 +53,7 @@ server {
   location ~ ^/([0-9]+) { return 301 https://$server_name/podcast/$1; }
   location ~ ^/gotime-([0-9]+) { return 301 https://$server_name/gotime/$1; }
   location ~ ^/rfc-([0-9]+) { return 301 https://$server_name/rfc/$1; }
+  location ~ ^/channel/(.+)$ { return 301 https://$server_name/topic/$1; }
 
   location /rss { return 301 https://$server_name/feed; }
   location /podcast/rss { return 301 https://$server_name/podcast/feed; }
