@@ -76,7 +76,7 @@
     tags: [check, uploads]
     https: true
     https_common_name: "*.changelog.com"
-    path: "/uploads/avatars/V1/avatar_small.png"
+    path: "/uploads/avatars/people/V1/avatar_small.png"
 
   - role: check
     tags: [check, changelogfm]
