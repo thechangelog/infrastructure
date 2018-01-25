@@ -63,6 +63,14 @@ server {
   location /sponsorship { return 301 https://$server_name/sponsor; }
   location /soundcheck { return 301 https://$server_name/guest; }
 
+  location /podcast/archive { return 301 https://$server_name/podcast; }
+  location /founderstalk/archive { return 301 https://$server_name/founderstalk; }
+  location /gotime/archive { return 301 https://$server_name/gotime; }
+  location /rfc/archive { return 301 https://$server_name/rfc; }
+  location /spotlight/archive { return 301 https://$server_name/spotlight; }
+  location /jsparty/archive { return 301 https://$server_name/jsparty; }
+  location /master/archive { return 301 https://$server_name/master; }
+
   # Sponsor redirects
   location /datadog { return 301 https://www.datadoghq.com/lpgs/?utm_source=Advertisement&utm_medium=Advertisement&utm_campaign=ChangelogPodcast-Tshirt; }
   location /sentry { return 301 https://sentry.io/from/changelog/; }
