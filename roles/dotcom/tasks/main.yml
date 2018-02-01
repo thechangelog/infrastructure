@@ -155,6 +155,11 @@
     docker exec nginx.{{ nginx_net }} nginx -t &&
     docker kill -s HUP nginx.{{ nginx_net }}
 
+- name: notify rollbar of deployment
+  when: app_version | changed or dotcom_force_deploy
+  shell: >
+    curl https://api.rollbar.com/api/1/deploy/ -F access_token={{ rollbar_access_token }} -F environment=production -F revision={{ app_version['after'] }}
+
 - name: backup db
   tags: dotcom_backup
   when: dotcom_backup
