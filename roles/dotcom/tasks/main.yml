@@ -126,6 +126,7 @@
     --env SECRET_KEY_BASE={{ secret_key_base }}
     --env SIGNING_SALT={{ signing_salt }}
     --env ROLLBAR_ACCESS_TOKEN={{ rollbar_access_token }}
+    --env BUFFER_TOKEN={{ buffer_token }}
     {{ dotcom_app_image }}
     ./script/run
 

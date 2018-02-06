@@ -145,6 +145,7 @@ jobs:
             SECRET_KEY_BASE: {{secret_key_base}}
             SIGNING_SALT: {{signing_salt}}
             ROLLBAR_ACCESS_TOKEN: {{rollbar_access_token}}
+            BUFFER_TOKEN: {{buffer_token}}
         on_success:
             put: slack
             params:
