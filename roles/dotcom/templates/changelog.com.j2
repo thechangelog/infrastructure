@@ -63,6 +63,7 @@ server {
   location /store { return 301 https://$server_name/community; }
   location /sponsorship { return 301 https://$server_name/sponsor; }
   location /soundcheck { return 301 https://$server_name/guest; }
+  location /submit { return 301 https://$server_name/news/submit; }
 
   location /podcast/archive { return 301 https://$server_name/podcast; }
   location /founderstalk/archive { return 301 https://$server_name/founderstalk; }
