@@ -40,6 +40,11 @@ server {
 
   location ^~ /uploads {
     root /var/www;
+
+    location ~ \.(?:gif|jpe?g|png|svg)$ {
+      add_header Cache-Control 'public';
+      expires max;
+    }
   }
 
   location ^~ /wp-content {
