@@ -161,6 +161,13 @@
   shell: >
     curl https://api.rollbar.com/api/1/deploy/ -F access_token={{ rollbar_access_token }} -F environment=production -F revision={{ app_version['after'] }}
 
+- name: wait until nginx succeeds proxying HTTP requests
+  tags: [focus]
+  command: >
+    curl --location {{ '--user ' + check_basic_auth if check_basic_auth else '' }} {{ '-k' if untrusted_ca else '' }} -sv {{ 'https' if https else 'http' }}://{{ fqdn }}
+  async: 60
+  poll: 5
+
 - name: backup db
   tags: dotcom_backup
   when: dotcom_backup
