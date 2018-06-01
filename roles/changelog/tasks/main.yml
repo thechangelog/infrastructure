@@ -22,16 +22,15 @@
 - name: install dnsimple dependency
   pip:
     name: dnsimple
-    state: present
+    state: latest
 
 - name: setup A record
   dnsimple:
-    account_email: "{{ dnsimple_email }}"
     account_api_token: "{{ dnsimple_api_token }}"
+    account_email: "{{ dnsimple_email }}"
     domain: changelog.com
     record: "{{ fqdn.split('.')[0] }}"
-    value: "{{ ansible_host }}"
     state: present
-    type: A
     ttl: 60
-
+    type: A
+    value: "{{ ansible_host }}"
