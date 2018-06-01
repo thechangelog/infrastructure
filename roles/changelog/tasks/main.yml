@@ -18,19 +18,3 @@
     content: "{{ changelog_https_chain }}"
     dest: "{{ nginx_config_dir }}/ssl/star.changelog.com.fullchain.pem"
     mode: 0644
-
-- name: install dnsimple dependency
-  pip:
-    name: dnsimple
-    state: latest
-
-- name: setup A record
-  dnsimple:
-    account_api_token: "{{ dnsimple_api_token }}"
-    account_email: "{{ dnsimple_email }}"
-    domain: changelog.com
-    record: "{{ fqdn.split('.')[0] }}"
-    state: present
-    ttl: 60
-    type: A
-    value: "{{ ansible_host }}"
