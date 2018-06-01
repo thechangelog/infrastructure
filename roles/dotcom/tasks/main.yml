@@ -131,9 +131,9 @@
     ./script/run
 
 - name: do not continue until the latest app version responds to HTTP requests
-  delay: 3
+  delay: 5
   register: latest_app_version_response
-  retries: 9
+  retries: 10
   shell: >
     docker run --rm
     --net {{nginx_net }}
