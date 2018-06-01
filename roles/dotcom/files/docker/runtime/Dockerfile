@@ -1,4 +1,4 @@
-FROM elixir:1.5.1
+FROM elixir:1.6.5
 
 RUN apt-get update \
     && apt-get install -y apt-utils \
