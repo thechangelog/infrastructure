@@ -130,6 +130,17 @@
     {{ dotcom_app_image }}
     ./script/run
 
+- name: do not continue until the latest app version responds to HTTP requests
+  delay: 3
+  register: latest_app_version_response
+  retries: 9
+  shell: >
+    docker run --rm
+    --net {{nginx_net }}
+    {{ dotcom_app_image }}
+    curl --silent --connect-timeout 1 --output /dev/null http://{{ app_name.stdout }}:4000
+  until: latest_app_version_response is success
+
 - name: configure nginx site
   template:
     src: changelog.com.j2
@@ -160,13 +171,6 @@
   when: app_version | changed or dotcom_force_deploy
   shell: >
     curl https://api.rollbar.com/api/1/deploy/ -F access_token={{ rollbar_access_token }} -F environment=production -F revision={{ app_version['after'] }}
-
-- name: wait until nginx succeeds proxying HTTP requests
-  tags: [focus]
-  command: >
-    curl --location {{ '--user ' + check_basic_auth if check_basic_auth else '' }} {{ '-k' if untrusted_ca else '' }} -sv {{ 'https' if https else 'http' }}://{{ fqdn }}
-  async: 60
-  poll: 5
 
 - name: backup db
   tags: dotcom_backup
