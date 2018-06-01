@@ -17,7 +17,7 @@
     enabled: yes
     state: started
 
-- name: cleanup packaged that are no longer required
+- name: cleanup packages that are no longer required
   shell: >
     DEBIAN_FRONTEND=noninteractive apt-get -y autoremove
 
