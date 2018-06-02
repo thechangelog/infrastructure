@@ -55,7 +55,7 @@
 - name: restart docker
   ignore_errors: true
   service: name=docker state=restarted
-  when: docker_config | changed
+  when: docker_config is changed
 
 - name: start docker on boot
   service: name=docker state=started enabled=yes
