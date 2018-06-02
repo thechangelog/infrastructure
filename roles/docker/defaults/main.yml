@@ -1,5 +1,5 @@
 docker_version: 17.04.0
-docker_py_version: 1.10.6
+docker_py_version: 3.3.0
 
 docker_apt_repository: "deb https://apt.dockerproject.org/repo ubuntu-{{ ansible_distribution_release }} main"
 
