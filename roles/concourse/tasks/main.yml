@@ -1,13 +1,7 @@
 - name: ensure volume dirs exist
-  file:
-    path: "{{ item }}"
-    state: directory
-    recurse: yes
-    owner: root
-    group: root
-  with_items:
-    - "{{ concourse_keys_dir }}"
-    - "{{ concourse_store_dir }}"
+  shell: >
+    mkdir -p {{ concourse_keys_dir }} {{ concourse_store_dir }}
+    chmod root:root {{ concourse_keys_dir }} {{ concourse_store_dir }}
 
 - name: generate RSA keys
   shell: >
@@ -21,14 +15,14 @@
     - worker_key
 
 - name: ensure concourse-web is running
-  docker:
+  docker_container:
     name: concourse-web
     image: "concourse/concourse:{{ concourse_version }}"
     command: web
-    pull: missing
-    state: reloaded
+    state: started
     restart_policy: unless-stopped
-    net: "{{ nginx_net }}"
+    networks:
+      - name: "{{ nginx_net }}"
     env:
       CONCOURSE_BASIC_AUTH_USERNAME: "{{ concourse_auth_user }}"
       CONCOURSE_BASIC_AUTH_PASSWORD: "{{ concourse_auth_pass }}"
@@ -41,19 +35,19 @@
     log_driver: json-file
 
 - name: ensure concourse-worker is running
-  docker:
+  docker_container:
     name: concourse-worker
     image: "concourse/concourse:{{ concourse_version }}"
     command: worker --garden-dns-server 8.8.8.8
     privileged: true
-    pull: missing
-    state: reloaded
+    state: started
     restart_policy: unless-stopped
-    net: "{{ postgres_net }}"
+    networks:
+      - name: "{{ postgres_net }}"
     env:
       CONCOURSE_POSTGRES_DATA_SOURCE: "postgres://{{ postgres_admin_user }}:{{ postgres_admin_pass }}@postgres.{{ postgres_net }}/{{ postgres_default_db }}?sslmode=disable"
       CONCOURSE_TSA_AUTHORIZED_KEYS: "/concourse-keys/worker_key.pub"
-      CONCOURSE_TSA_HOST: concourse-web
+      CONCOURSE_TSA_HOST: concourse-web:2222
       CONCOURSE_TSA_PUBLIC_KEY: /concourse-keys/tsa_host_key.pub
     volumes:
       - "{{ concourse_keys_dir }}:/concourse-keys:ro"

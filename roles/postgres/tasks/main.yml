@@ -14,13 +14,13 @@
     docker pull postgres:{{ postgres_version }}
 
 - name: ensure container is running
-  docker:
+  docker_container:
     name: "postgres.{{ postgres_net }}"
     image: "postgres:{{ postgres_version }}"
-    pull: missing
-    state: reloaded
+    state: started
     restart_policy: always
-    net: "{{ postgres_net }}"
+    networks:
+      - name: "{{ postgres_net }}"
     env:
       POSTGRES_USER: "{{ postgres_admin_user }}"
       POSTGRES_PASSWORD: "{{ postgres_admin_pass }}"

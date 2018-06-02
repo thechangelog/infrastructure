@@ -49,7 +49,7 @@
 - name: get network gateway
   register: docker_network_gateway
   shell: >
-    gateway_ip=$(docker network inspect {{ nginx_net }} | jq -r ".[0].IPAM.Config[0].Gateway" | awk -F '/' '{ print $1 }') &&
+    gateway_ip=$(docker network inspect bridge | jq -r ".[0].IPAM.Config[0].Gateway" | awk -F '/' '{ print $1 }') &&
     if [ $gateway_ip = null ];
     then
       echo 127.0.0.1
@@ -73,12 +73,13 @@
     docker pull nginx:{{ nginx_version }}
 
 - name: ensure container is running
-  docker:
+  docker_container:
     name: "nginx.{{ nginx_net }}"
     image: "nginx:{{ nginx_version }}"
-    state: reloaded
+    state: started
     restart_policy: always
-    net: "{{ nginx_net }}"
+    networks:
+      - name: "{{ nginx_net }}"
     ports:
       - 80:80
       - 443:443
