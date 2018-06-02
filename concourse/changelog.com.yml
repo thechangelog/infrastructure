@@ -13,6 +13,15 @@ resources:
       branch: master
       private_key: {{concourse_ssh_private_key}}
 
+  - name: dotcom-runtime-dockerfile
+    type: git
+    source:
+      uri: git@github.com:thechangelog/infrastructure.git
+      branch: master
+      private_key: {{concourse_ssh_private_key}}
+      paths:
+        - roles/dotcom/files/docker/runtime/**
+
   - name: dotcom
     type: git
     source:
@@ -168,7 +177,8 @@ jobs:
 
   - name: build-runtime-image
     plan:
-      - get: infrastructure
+      - get: dotcom-runtime-dockerfile
+        trigger: true
       - put: dotcom-runtime-image
         params:
-          build: infrastructure/roles/dotcom/files/docker/runtime
+          build: dotcom-runtime-dockerfile/roles/dotcom/files/docker/runtime
