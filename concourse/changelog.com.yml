@@ -13,7 +13,7 @@ resources:
       branch: master
       private_key: {{concourse_ssh_private_key}}
 
-  - name: infrastructure-ansible-dockerfile
+  - name: ansible-dockerfile
     type: git
     source:
       uri: git@github.com:thechangelog/infrastructure.git
@@ -22,7 +22,7 @@ resources:
       paths:
         - roles/concourse/files/docker/ansible/**
 
-  - name: dotcom-assets-dockerfile
+  - name: assets-dockerfile
     type: git
     source:
       uri: git@github.com:thechangelog/infrastructure.git
@@ -31,7 +31,7 @@ resources:
       paths:
         - roles/dotcom/files/docker/assets/**
 
-  - name: dotcom-runtime-dockerfile
+  - name: runtime-dockerfile
     type: git
     source:
       uri: git@github.com:thechangelog/infrastructure.git
@@ -57,7 +57,7 @@ resources:
     source:
       url: {{slack_webhook}}
 
-  - name: dotcom-assets-image
+  - name: assets-image
     type: docker-image
     source:
       repository: thechangelog/assets
@@ -65,7 +65,7 @@ resources:
       username: {{dockerhub_user}}
       password: {{dockerhub_pass}}
 
-  - name: dotcom-runtime-image
+  - name: runtime-image
     type: docker-image
     source:
       repository: thechangelog/runtime
@@ -73,7 +73,7 @@ resources:
       username: {{dockerhub_user}}
       password: {{dockerhub_pass}}
 
-  - name: thechangelog-ansible-image
+  - name: ansible-image
     type: docker-image
     source:
       repository: thechangelog/ansible
@@ -194,26 +194,26 @@ jobs:
               icon_url: http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
               username: concourse
 
-  - name: build-assets-image
+  - name: build-assets
     plan:
-      - get: dotcom-assets-dockerfile
+      - get: assets-dockerfile
         trigger: true
-      - put: dotcom-assets-image
+      - put: assets-image
         params:
-          build: dotcom-assets-dockerfile/roles/dotcom/files/docker/assets
+          build: assets-dockerfile/roles/dotcom/files/docker/assets
 
-  - name: build-runtime-image
+  - name: build-runtime
     plan:
-      - get: dotcom-runtime-dockerfile
+      - get: runtime-dockerfile
         trigger: true
-      - put: dotcom-runtime-image
+      - put: runtime-image
         params:
-          build: dotcom-runtime-dockerfile/roles/dotcom/files/docker/runtime
+          build: runtime-dockerfile/roles/dotcom/files/docker/runtime
 
-  - name: build-ansible-image
+  - name: build-ansible
     plan:
-      - get: infrastructure-ansible-dockerfile
+      - get: ansible-dockerfile
         trigger: true
-      - put: thechangelog-ansible-image
+      - put: ansible-image
         params:
-          build: infrastructure-ansible-dockerfile/roles/concourse/files/docker/ansible
+          build: ansible-dockerfile/roles/concourse/files/docker/ansible
