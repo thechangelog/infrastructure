@@ -1,6 +1,6 @@
 [![ci.changelog.com](https://ci.changelog.com/api/v1/teams/main/pipelines/changelog.com/jobs/configure/badge)](https://ci.changelog.com/teams/main/pipelines/changelog.com/jobs/configure)
 
-This repository contains everything that is required to provision and manage **The Changelog** infrastructure.
+This repository contains everything that is required to provision and manage **Changelog's** infrastructure.
 
 Most of it is Ansible playbooks and roles, but also Dockerfiles,
 Concourse pipeline configurations and scripts that hold everything together.
@@ -26,6 +26,6 @@ The tracker doubles up as a [wiki](https://www.pivotaltracker.com/n/projects/165
 
 ### Is it just me, or is it hard to get started with this?
 
-We are talking about this on the Changelog Ping, [help us decide how we continue investing our time](https://github.com/thechangelog/ping/issues/830).
+We are talking about this on Changelog's Ping, [help us decide how we continue investing our time](https://github.com/thechangelog/ping/issues/830).
 
-If you want to understand the big picture, read [The code behind changelog.com infrastructure](https://changelog.com/posts/thechangelog-infrastructure).
+If you want to understand the big picture, read [The code behind Changelog's infrastructure](https://changelog.com/posts/the-code-behind-changelog-infrastructure).
