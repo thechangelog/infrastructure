@@ -5,11 +5,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN export DEBIAN_FRONTEND=noninteractive \
-    && gpg --keyserver pgpkeys.mit.edu --recv-key 5C808C2B65558117 \
-    && gpg -a --export 5C808C2B65558117 | apt-key add - \
-    && echo "deb http://www.deb-multimedia.org jessie main" > /etc/apt/sources.list.d/deb-multimedia.list \
     && apt-get update \
-    && apt-get install -y deb-multimedia-keyring ffmpeg \
+    && apt-get install -y ffmpeg \
     && which ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
