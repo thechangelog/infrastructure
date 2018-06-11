@@ -1,4 +1,4 @@
-FROM node:6.9.1
+FROM node:6.11.5
 
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \

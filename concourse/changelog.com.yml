@@ -61,7 +61,7 @@ resources:
     type: docker-image
     source:
       repository: thechangelog/assets
-      tag: node6.9.1-yarn0.19.1
+      tag: node6.11.5-yarn0.19.1
       username: {{dockerhub_user}}
       password: {{dockerhub_pass}}
 
