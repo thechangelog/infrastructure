@@ -45,6 +45,11 @@ server {
       add_header Cache-Control 'public';
       expires max;
     }
+
+    location ~ \.mp3$ {
+      keepalive_timeout 300; # global is 30
+      send_timeout 300; # global is 10
+    }
   }
 
   location ^~ /wp-content {
