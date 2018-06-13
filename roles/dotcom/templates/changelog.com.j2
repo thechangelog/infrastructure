@@ -61,6 +61,13 @@ server {
     expires max;
   }
 
+  location /nginx_status {
+    stub_status on;
+    access_log   off;
+    allow 64.64.153.140;
+    deny all;
+  }
+
   location ~ wp-login\.php { return 444; }
 
   location ~ ^/([0-9]+) { return 301 https://$server_name/podcast/$1; }
