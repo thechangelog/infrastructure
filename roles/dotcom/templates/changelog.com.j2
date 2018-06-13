@@ -48,8 +48,8 @@ server {
 
     location ~ \.mp3$ {
       add_header Surrogate-Control 'max-age=3600';
-      keepalive_timeout 300; # global is 30
-      send_timeout 300; # global is 10
+      keepalive_timeout 60; # global is 30
+      send_timeout 60; # global is 10
 
       open_file_cache max=10000 inactive=30s;
       open_file_cache_errors   on;
