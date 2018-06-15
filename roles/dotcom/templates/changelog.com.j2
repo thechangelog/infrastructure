@@ -62,13 +62,6 @@ server {
     expires max;
   }
 
-  location /nginx_status {
-    stub_status on;
-    access_log   off;
-    allow 64.64.153.140;
-    deny all;
-  }
-
   location ^~ /reactpodcast/wp-content { return 404; }
 
   location ~ wp-login\.php { return 444; }
