@@ -14,6 +14,7 @@ campaign_monitor_api_token: "{{ lookup('env', 'CM_API_TOKEN') }}"
 
 github_client_id: "{{ lookup('env', 'GITHUB_CLIENT_ID') }}"
 github_client_secret: "{{ lookup('env', 'GITHUB_CLIENT_SECRET') }}"
+github_api_token: "{{ lookup('env', 'GITHUB_API_TOKEN') }}"
 
 twitter_consumer_key: "{{ lookup('env', 'TWITTER_CONSUMER_KEY') }}"
 twitter_consumer_secret: "{{ lookup('env', 'TWITTER_CONSUMER_SECRET') }}"

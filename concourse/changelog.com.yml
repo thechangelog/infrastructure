@@ -171,6 +171,7 @@ jobs:
             CM_API_TOKEN: {{campaign_monitor_api_token}}
             GITHUB_CLIENT_ID: {{github_client_id}}
             GITHUB_CLIENT_SECRET: {{github_client_secret}}
+            GITHUB_API_TOKEN: {{github_api_token}}
             TWITTER_CONSUMER_KEY: {{twitter_consumer_key}}
             TWITTER_CONSUMER_SECRET: {{twitter_consumer_secret}}
             AWS_ACCESS_KEY_ID: {{aws_access_key_id}}
