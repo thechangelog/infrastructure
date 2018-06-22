@@ -1,0 +1,22 @@
+- name: install netdata
+  args:
+    executable: /bin/bash
+  shell: >
+    pgrep -a netdata || bash <(curl -Ss https://my-netdata.io/kickstart.sh) all
+
+- name: ensure netdata is running
+  service:
+    name: netdata
+    state: started
+
+- name: configure nginx proxy
+  register: netdata_nginx
+  template:
+    src: nginx.netdata.j2
+    dest: "{{ nginx_config_dir }}/sites/{{ fqdn }}.site"
+
+- name: reload nginx
+  when: netdata_nginx is changed
+  shell: >
+    docker exec nginx.{{ nginx_net }} nginx -t &&
+    docker kill -s HUP nginx.{{ nginx_net }}

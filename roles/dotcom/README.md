@@ -1,6 +1,6 @@
-# Fastly 503 Errors log rule
+[cdn.changelog.com](https://manage.fastly.com/dashboard/services/7gKbcKSKGDyqU7IuDr43eG/datacenters/all) | [netdata.changelog.com](https://netdata.changelog.com)
 
-[Fastly cdn.changelog.com](https://manage.fastly.com/dashboard/services/7gKbcKSKGDyqU7IuDr43eG/datacenters/all)
+# Fastly 503 Errors log rule
 
 ```
                                                               bytes sent, including headers
