@@ -6,7 +6,7 @@ RUN apt-get update \
 
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
-    && apt-get install -y ffmpeg \
+    && apt-get install -y ffmpeg netcat \
     && which ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
