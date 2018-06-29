@@ -69,7 +69,7 @@ resources:
     type: docker-image
     source:
       repository: thechangelog/runtime
-      tag: elixir1.6.5-ffmpeg
+      tag: elixir1.6.5-ffmpeg-20180629
       username: {{dockerhub_user}}
       password: {{dockerhub_pass}}
 
