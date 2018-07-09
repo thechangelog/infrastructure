@@ -3,7 +3,6 @@ app
 ci
 
 [app]
-c16-app ansible_host=198.74.61.95 ansible_user=root
 c18-app ansible_host=172.104.216.248 ansible_user=root
 
 [ci]
