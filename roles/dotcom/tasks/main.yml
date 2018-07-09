@@ -61,7 +61,7 @@
     docker pull {{ dotcom_assets_image }}
 
 - name: compile assets
-  when: app_version | changed or dotcom_force_deploy
+  when: app_version is changed or dotcom_force_deploy
   shell: >
     docker run --rm --tty
     --name {{ app_name.stdout }}-assets
@@ -73,7 +73,7 @@
     ./script/assets_compile
 
 - name: digest assets
-  when: app_version | changed or dotcom_force_deploy
+  when: app_version is changed or dotcom_force_deploy
   shell: >
     docker run --rm --tty
     --name {{ app_name.stdout }}-assets
@@ -85,7 +85,7 @@
     ./script/assets_digest
 
 - name: migrate db
-  when: app_version | changed or dotcom_force_deploy
+  when: app_version is changed or dotcom_force_deploy
   shell: >
     docker run --rm --tty
     --name {{ app_name.stdout }}-db
@@ -169,7 +169,7 @@
     docker kill -s HUP nginx.{{ nginx_net }}
 
 - name: notify rollbar of deployment
-  when: app_version | changed or dotcom_force_deploy
+  when: app_version is changed or dotcom_force_deploy
   shell: >
     curl https://api.rollbar.com/api/1/deploy/ -F access_token={{ rollbar_access_token }} -F environment=production -F revision={{ app_version['after'] }}
 
