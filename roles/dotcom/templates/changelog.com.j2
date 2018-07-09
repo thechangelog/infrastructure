@@ -2,7 +2,7 @@
 
 server {
   listen 80;
-  server_name {{ fqdn }} www.{{ fqdn }};
+  server_name {{ fqdn }} www.{{ fqdn }} www2.{{ fqdn }};
   return 301 https://{{ fqdn }}$request_uri;
 }
 
