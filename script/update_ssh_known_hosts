@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+[ -z "$DEBUG" ] || set -x
+
+ci=66.228.44.178
+app=172.104.216.248
+
+SSH_KNOWN_HOSTS="$(ssh-keyscan "$ci" "$app" 2>/dev/null)"
+
+lpass edit --non-interactive --notes 114148528593666874 <<< "$SSH_KNOWN_HOSTS"
