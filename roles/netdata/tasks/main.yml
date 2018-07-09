@@ -1,8 +1,13 @@
+- name: install autoconf
+  package:
+    name: autoconf
+    state: present
+
 - name: install netdata
   args:
     executable: /bin/bash
   shell: >
-    pgrep -a netdata || bash <(curl -Ss https://my-netdata.io/kickstart.sh) all
+    pgrep -a netdata || bash <(curl -Ss https://my-netdata.io/kickstart.sh) all --non-interactive
 
 - name: ensure netdata is running
   service:
