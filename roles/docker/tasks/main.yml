@@ -1,9 +1,6 @@
 - name: fail if not a new release of Ubuntu
   fail: msg="{{ ansible_distribution_version }} is not an acceptable version of Ubuntu for this role"
-  when: ansible_distribution_version not in ["14.04", "16.04"]
-
-- include: lvm.yml
-  when: docker_dev is defined
+  when: ansible_distribution_version not in ["16.04", "18.04"]
 
 - name: upload GPG key
   copy: src=docker.gpg dest=/tmp/docker.gpg
@@ -32,30 +29,21 @@
     version: "{{ docker_py_version }}"
     state: present
 
-- name: pin docker-engine version
+- name: pin docker version
   copy:
     dest: /etc/apt/preferences.d/pin-docker-engine
     content: |
-      Package: docker-engine
+      Package: docker-ce
       Pin: version {{ docker_version }}*
       Pin-Priority: 1000
 
 - name: install package
-  apt: name="docker-engine={{ docker_version }}*"
+  apt: name="docker-ce={{ docker_version }}*"
 
 - name: ensure docker group exists
   group:
     name: docker
     state: present
-
-- name: config
-  template: src=daemon.json.j2 dest=/etc/docker/daemon.json
-  register: docker_config
-
-- name: restart docker
-  ignore_errors: true
-  service: name=docker state=restarted
-  when: docker_config is changed
 
 - name: start docker on boot
   service: name=docker state=started enabled=yes
@@ -65,6 +53,3 @@
         mode=0644 owner=root group=root
 
 - include: logrotation.yml
-
-- include: devicemapper.yml
-  when: docker_dev is defined
