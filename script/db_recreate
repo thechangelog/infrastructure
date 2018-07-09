@@ -46,7 +46,6 @@ close_tunnel_to_remote_host() {
 restore_db() {
   PGPASSWORD="$pg_pass" psql \
     --host $pg_ip --port $pg_local_port --username "$pg_user" \
-    --single-transaction \
     "$pg_db" < "$pg_dump_file"
 
   echo -e "\nOK! $pg_db db on $ssh_host re-created from $pg_dump_file"
