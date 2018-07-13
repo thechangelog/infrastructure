@@ -142,6 +142,11 @@
     curl --silent --connect-timeout 1 --output /dev/null http://{{ app_name.stdout }}:4000
   until: latest_app_version_response is success
 
+- name: configure nginx site HTTP/S common config
+  template:
+    src: changelog.com.common.j2
+    dest: "{{ nginx_config_dir }}/sites/{{ fqdn }}.common"
+
 - name: configure nginx site
   template:
     src: changelog.com.j2
