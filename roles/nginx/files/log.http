@@ -8,4 +8,4 @@ log_format debug_503 '[$time_local] $http_user_agent $remote_addr'
     ' [$request] s:$status r:$request_completion'
     ' t:$request_time rtt:$tcpinfo_rtt b:$bytes_sent';
 
-access_log /var/log/nginx/access.log debug_503;
+access_log off;
