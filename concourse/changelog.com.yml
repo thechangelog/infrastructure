@@ -182,6 +182,8 @@ jobs:
             SIGNING_SALT: {{signing_salt}}
             ROLLBAR_ACCESS_TOKEN: {{rollbar_access_token}}
             BUFFER_TOKEN: {{buffer_token}}
+            ALGOLIA_APPLICATION_ID: {{algolia_application_id}}
+            ALGOLIA_API_KEY: {{algolia_api_key}}
         on_success:
             put: slack
             params:

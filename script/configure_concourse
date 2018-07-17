@@ -61,6 +61,8 @@ configure_pipeline() {
     --var dockerhub_pass="$DOCKERHUB_PASS" \
     --var rollbar_access_token="$ROLLBAR_ACCESS_TOKEN" \
     --var buffer_token="$BUFFER_TOKEN" \
+    --var algolia_application_id="$ALGOLIA_APPLICATION_ID" \
+    --var algolia_api_key="$ALGOLIA_API_KEY"
     --config "concourse/${concourse_pipeline}.yml" --pipeline "$concourse_pipeline"
   # Make pipeline public for build badges
   fly --target "$concourse_target" expose-pipeline --pipeline "$concourse_pipeline"

@@ -30,3 +30,6 @@ signing_salt: "{{ lookup('env', 'SIGNING_SALT') }}"
 
 rollbar_access_token: "{{ lookup('env', 'ROLLBAR_ACCESS_TOKEN') }}"
 buffer_token: "{{ lookup('env', 'BUFFER_TOKEN') }}"
+
+algolia_application_id: "{{ lookup('env', 'ALGOLIA_APPLICATION_ID') }}"
+algolia_api_key: "{{ lookup('env', 'ALGOLIA_API_KEY') }}"
