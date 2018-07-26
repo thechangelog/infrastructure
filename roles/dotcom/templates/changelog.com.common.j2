@@ -72,6 +72,9 @@ location /spotlight/archive { return 301 https://$server_name/spotlight; }
 location /jsparty/archive { return 301 https://$server_name/jsparty; }
 location /master/archive { return 301 https://$server_name/master; }
 
+location /reactpodcast/feed { return 301 https://rss.simplecast.com/podcasts/6265/rss }
+location /reactpodcast { return 301 https://reactpodcast.simplecast.fm }
+
 # Sponsor redirects
 location /datadog { return 301 https://www.datadoghq.com/lpgs/?utm_source=Advertisement&utm_medium=Advertisement&utm_campaign=ChangelogPodcast-Tshirt; }
 location /sentry { return 301 https://sentry.io/from/changelog/; }
