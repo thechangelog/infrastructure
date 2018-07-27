@@ -1,5 +1,5 @@
 docker_version: 18.03.1
-docker_py_version: 1.10.6
+docker_version: 3.4.1
 
 docker_apt_repository: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
 

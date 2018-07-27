@@ -22,11 +22,16 @@
 - name: update pip to latest
   command: pip install --upgrade pip
 
+- name: uninstall docker-py
+  pip:
+    name: docker-py
+    state: absent
+
 - name: install Python bindings
   pip:
     executable: /usr/local/bin/pip
-    name: docker-py
-    version: "{{ docker_py_version }}"
+    name: docker
+    version: "{{ docker_version }}"
     state: present
 
 - name: pin docker version
