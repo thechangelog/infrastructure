@@ -31,7 +31,7 @@
   pip:
     executable: /usr/local/bin/pip
     name: docker
-    version: "{{ docker_version }}"
+    version: "{{ docker_python_version }}"
     state: present
 
 - name: pin docker version
