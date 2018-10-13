@@ -10,8 +10,8 @@ server {
   include /etc/nginx/sites/{{ fqdn }}.common;
 
   # All user agents will use https://, remember for 1 year
-  # Add this domain to the user agent's HSTS preload list
-  add_header Strict-Transport-Security 'max-age=31536000; preload';
+  # Allow adding the domain to the HSTS Preload List
+  add_header Strict-Transport-Security 'max-age=31536000; includeSubDomains; preload';
 
   ssl on;
   ssl_certificate /etc/nginx/ssl/star.changelog.com.crt;

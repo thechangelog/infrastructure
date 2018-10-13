@@ -10,9 +10,6 @@ server {
   listen 443 ssl http2;
   server_name {{ fqdn }};
 
-  # All user agents will use https://, remember for 1 year
-  # Add this domain to the user agent's HSTS preload list
-  add_header Strict-Transport-Security 'max-age=31536000; preload';
   # The page can only be displayed in a frame on the same origin as the page itself
   add_header X-Frame-Options SAMEORIGIN;
 
