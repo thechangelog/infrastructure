@@ -22,24 +22,6 @@ resources:
       paths:
         - roles/concourse/files/docker/ansible/**
 
-  - name: assets-dockerfile
-    type: git
-    source:
-      uri: git@github.com:thechangelog/infrastructure.git
-      branch: master
-      private_key: {{concourse_ssh_private_key}}
-      paths:
-        - roles/dotcom/files/docker/assets/**
-
-  - name: runtime-dockerfile
-    type: git
-    source:
-      uri: git@github.com:thechangelog/infrastructure.git
-      branch: master
-      private_key: {{concourse_ssh_private_key}}
-      paths:
-        - roles/dotcom/files/docker/runtime/**
-
   - name: dotcom
     type: git
     source:
@@ -56,22 +38,6 @@ resources:
     type: slack-notification
     source:
       url: {{slack_webhook}}
-
-  - name: assets-image
-    type: docker-image
-    source:
-      repository: thechangelog/assets
-      tag: node6.11.5-yarn0.19.1
-      username: {{dockerhub_user}}
-      password: {{dockerhub_pass}}
-
-  - name: runtime-image
-    type: docker-image
-    source:
-      repository: thechangelog/runtime
-      tag: elixir1.6.5-ffmpeg-20180629
-      username: {{dockerhub_user}}
-      password: {{dockerhub_pass}}
 
   - name: ansible-image
     type: docker-image
@@ -196,22 +162,6 @@ jobs:
               text: "production deploy failed :scream: https://ci.changelog.com/teams/main/pipelines/changelog.com"
               icon_url: http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
               username: concourse
-
-  - name: build-assets
-    plan:
-      - get: assets-dockerfile
-        trigger: true
-      - put: assets-image
-        params:
-          build: assets-dockerfile/roles/dotcom/files/docker/assets
-
-  - name: build-runtime
-    plan:
-      - get: runtime-dockerfile
-        trigger: true
-      - put: runtime-image
-        params:
-          build: runtime-dockerfile/roles/dotcom/files/docker/runtime
 
   - name: build-ansible
     plan:
