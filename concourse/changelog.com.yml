@@ -13,15 +13,6 @@ resources:
       branch: master
       private_key: {{concourse_ssh_private_key}}
 
-  - name: ansible-dockerfile
-    type: git
-    source:
-      uri: git@github.com:thechangelog/infrastructure.git
-      branch: master
-      private_key: {{concourse_ssh_private_key}}
-      paths:
-        - roles/concourse/files/docker/ansible/**
-
   - name: dotcom
     type: git
     source:
@@ -38,14 +29,6 @@ resources:
     type: slack-notification
     source:
       url: {{slack_webhook}}
-
-  - name: ansible-image
-    type: docker-image
-    source:
-      repository: thechangelog/ansible
-      tag: 2.5.0
-      username: {{dockerhub_user}}
-      password: {{dockerhub_pass}}
 
 jobs:
   - name: backup
@@ -162,11 +145,3 @@ jobs:
               text: "production deploy failed :scream: https://ci.changelog.com/teams/main/pipelines/changelog.com"
               icon_url: http://cl.ly/image/3e1h0H3H2s0P/concourse-logo.png
               username: concourse
-
-  - name: build-ansible
-    plan:
-      - get: ansible-dockerfile
-        trigger: true
-      - put: ansible-image
-        params:
-          build: ansible-dockerfile/roles/concourse/files/docker/ansible
