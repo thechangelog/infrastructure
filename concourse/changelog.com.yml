@@ -72,8 +72,6 @@ jobs:
             HTTPS_CERT: {{changelog_https_cert}}
             HTTPS_KEY: {{changelog_https_key}}
             HTTPS_CHAIN: {{changelog_https_chain}}
-            DNSIMPLE_EMAIL: {{dnsimple_email}}
-            DNSIMPLE_API_TOKEN: {{dnsimple_api_token}}
             PG_DOTCOM_PASS: {{postgres_admin_pass}}
             PG_CONCOURSE_PASS: {{postgres_concourse_pass}}
         - task: concourse
