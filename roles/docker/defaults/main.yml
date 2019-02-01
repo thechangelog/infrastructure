@@ -1,8 +1,0 @@
-docker_version: 18.06.0
-docker_python_version: 3.4.1
-
-docker_apt_repository: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-
-# docker_dev: set to the disk that should be used for Docker
-# docker_data_size: used by Docker daemon for images (required if docker_dev set)
-# docker_volumes_size: used for Docker volumes (required if docker_dev set)

@@ -1,2 +1,0 @@
-- include: http_check.yml
-  tags: [http_check]

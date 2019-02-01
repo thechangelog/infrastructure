@@ -1,7 +1,0 @@
-#/* vim: set ft=yaml : */
-
-nginx_dhparam_size: 1024
-nginx_config_dir: "{{ lookup('env','HOME') }}/code/changelog/nginx"
-web_volume_path: "{{ lookup('env','HOME') }}/code/changelog"
-postgres_volume_path: "{{ lookup('env','HOME') }}/code/changelog/postgres"
-fqdn: dev.changelog.com

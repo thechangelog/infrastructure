@@ -1,6 +1,0 @@
-#!/bin/bash -e
-
-[ -z "$DEBUG" ] || set -x
-
-brew install direnv lastpass-cli pwgen ssh-copy-id ansible
-direnv allow

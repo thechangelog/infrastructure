@@ -1,7 +1,0 @@
-nginx_version: 1.11.5
-
-nginx_config_dir: /data/nginx
-
-nginx_dhparam_size: 2048
-
-nginx_net: web
