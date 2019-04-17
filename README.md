@@ -4,4 +4,4 @@ The [changelog.com](https://changelog.com) infrastructure is managed from https:
 
 The new changelog.com infrastructure overview:
 
-![](https://github.com/thechangelog/changelog.com/raw/master/infrastructure.png "2019 changelog.com infrastructure")
+![](https://changelog-assets.s3.amazonaws.com/posts/2019-infrastructure-developers.png "2019 changelog.com infrastructure")
